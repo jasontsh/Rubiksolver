@@ -30,14 +30,17 @@ public class RubiksSolver {
             return queue.remove();
         }
         Integer[] answer = new Integer[3];
+        answer[0] = 0;
+        answer[1] = 0;
+        answer[2] = 0;
         switch(state){
-            case 0: state0(answer);
-            case 1: state1(answer);
-            case 2: state2(answer);
-            case 3: state3(answer);
-            case 4: state4(answer);
-            case 5: state5(answer);
-            case 6: state6(answer);
+            case 0: state0(answer); break;
+            case 1: state1(answer); break;
+            case 2: state2(answer); break;
+            case 3: state3(answer); break;
+            case 4: state4(answer); break;
+            case 5: state5(answer); break;
+            case 6: state6(answer); break;
         }
         return answer;
     }
@@ -54,14 +57,14 @@ public class RubiksSolver {
         left.add(2);
         left.add(4);
         left.add(5);
-        for(CubePart cs: locked){
-            left.remove(cs.getColor(0));
-        }
         for(Integer i: left){
             if(cube.getCenters()[0].getSide(i).getColor(0) == 0 &&
                     cube.getCenters()[0].getSide(i).getColor(i) == i) {
                 locked.add(cube.getCenters()[0].getSide(i));
             }
+        }
+        for(CubePart cs: locked){
+            left.remove(((CubeSide) cs).getOtherColor(0));
         }
         if(locked.size() >= 4){
             state++;
@@ -277,6 +280,12 @@ public class RubiksSolver {
         CubeSide br = cube.getCenters()[i1].getSide(i2);
         if(br.getColor(i2) == 0) {
             int othercolor = br.getOtherColor(1);
+            if(othercolor == i1){
+                answer[0]=i1;
+                answer[1] = i2;
+                answer[2] = 0;
+                return true;
+            }
             answer[0] = i1;
             answer[1] = 0;
             answer[2] = i2;

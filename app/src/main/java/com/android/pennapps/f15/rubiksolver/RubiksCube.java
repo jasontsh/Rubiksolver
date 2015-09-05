@@ -6,8 +6,6 @@ import java.util.HashSet;
  * Created by Jason on 9/4/2015.
  */
 public class RubiksCube {
-    int colorFace;
-    int colorUp;
     CubeCenter[] centers;
 
     public RubiksCube(int[][][] array){
@@ -197,11 +195,11 @@ public class RubiksCube {
         s2.add(from);
         s2.add(to);
         CubeCorner cc2 = c.getCorner(s2);
-        cc1.change(to3, from);
         cc1.change(from, to);
+        cc1.change(to3, from);
         cs1.change(from, to);
-        cc2.change(from, to);
         cc2.change(to, to2);
+        cc2.change(from, to);
 
         CubeSide cs2 = c.getSide(to);
         HashSet<Integer> s3 = new HashSet<Integer>();
@@ -209,8 +207,8 @@ public class RubiksCube {
         s3.add(to2);
         CubeCorner cc3 = c.getCorner(s3);
         cs2.change(to, to2);
-        cc3.change(to, to2);
         cc3.change(to2, to3);
+        cc3.change(to, to2);
 
         CubeSide cs3 = c.getSide(to2);
         HashSet<Integer> s4 = new HashSet<Integer>();
@@ -219,8 +217,8 @@ public class RubiksCube {
         CubeCorner cc4 = c.getCorner(s4);
         CubeSide cs4 = c.getSide(to3);
         cs3.change(to2, to3);
-        cc4.change(to2, to3);
         cc4.change(to3, from);
+        cc4.change(to2, to3);
         cs4.change(to3, from);
 
         c.setCorner(s1, cc4);
@@ -278,3 +276,4 @@ public class RubiksCube {
         ct3.setCorner(ct32, cc4);
     }
 }
+

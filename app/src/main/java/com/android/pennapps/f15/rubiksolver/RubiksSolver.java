@@ -989,6 +989,154 @@ public class RubiksSolver {
     }
 
     public void state6(Integer[] answer){
+        HashSet<Integer> s1 = new HashSet<Integer>();
+        s1.add(1);
+        s1.add(2);
+        CubeCorner ybr = cube.getCenters()[3].getCorner(s1);
 
+        HashSet<Integer> s2 = new HashSet<Integer>();
+        s2.add(4);
+        s2.add(2);
+        CubeCorner yrg = cube.getCenters()[3].getCorner(s2);
+
+        HashSet<Integer> s3 = new HashSet<Integer>();
+        s3.add(4);
+        s3.add(5);
+        CubeCorner ygo = cube.getCenters()[3].getCorner(s3);
+
+        HashSet<Integer> s4 = new HashSet<Integer>();
+        s4.add(5);
+        s4.add(1);
+        CubeCorner yob = cube.getCenters()[3].getCorner(s4);
+
+        int start = 0;
+        if(ybr.getColor(1) == 3){
+            start = 1;
+            state6alg(1, 2);
+        } else if(ybr.getColor(2) == 3){
+            start = 1;
+            state6alg(1, 2);
+            state6alg(1, 2);
+        }
+
+        if(yrg.getColor(3) != 3){
+            if(start == 1){
+                Integer[] r1 = new Integer[3];
+                r1[0] = 3;
+                r1[1] = 2;
+                r1[2] = 1;
+                queue.add(r1);
+                state6alg(1, 2);
+                if(yrg.getColor(4)==3){
+                    state6alg(1,2);
+                }
+            }else{
+                state6alg(2, 4);
+                if(yrg.getColor(4)==3){
+                    state6alg(2, 4);
+                }
+                start = 2;
+            }
+        }
+
+        if(ygo.getColor(3) != 3){
+            if(start != 0){
+                if(start == 1){
+                    Integer[] r1 = new Integer[3];
+                    r1[0] = 3;
+                    r1[1] = 2;
+                    r1[2] = 1;
+                    queue.add(r1);
+                }
+                Integer[] r1 = new Integer[3];
+                r1[0] = 3;
+                r1[1] = 2;
+                r1[2] = 1;
+                queue.add(r1);
+                if(start == 1){
+                    state6alg(1, 2);
+                    if(ygo.getColor(5) == 3){
+                        state6alg(1, 2);
+                    }
+                } else if(start == 2) {
+                    state6alg(2, 4);
+                    if (ygo.getColor(5) == 3) {
+                        state6alg(2, 4);
+                    }
+                }
+            }else{
+                state6alg(4, 5);
+                if(ygo.getColor(5) == 3){
+                    state6alg(4, 5);
+                }
+                start = 3;
+            }
+        }
+
+        if(yob.getColor(3) != 3){
+            if(start == 1){
+                Integer[] r1 = new Integer[3];
+                r1[0] = 3;
+                r1[1] = 1;
+                r1[2] = 2;
+                queue.add(r1);
+                state6alg(1, 2);
+                if(yob.getColor(1)== 3){
+                    state6alg(1, 2);
+                }
+            }
+            if(start > 1){
+                if(start == 2){
+                    Integer[] r1 = new Integer[3];
+                    r1[0] = 3;
+                    r1[1] = 2;
+                    r1[2] = 1;
+                    queue.add(r1);
+                }
+                Integer[] r1 = new Integer[3];
+                r1[0] = 3;
+                r1[1] = 2;
+                r1[2] = 1;
+                queue.add(r1);
+                if(start == 2){
+                    state6alg(2, 4);
+                    if(yob.getColor(1) == 3){
+                        state6alg(2, 4);
+                    }
+                }else{
+                    state6alg(4, 5);
+                    if(yob.getColor(1) == 3){
+                        state6alg(4, 5);
+                    }
+                }
+            }
+        }
+        Integer[] b = queue.remove();
+        answer[0] = b[0];
+        answer[1] = b[1];
+        answer[2] = b[2];
+    }
+
+    public void state6alg(int s1, int s2){
+        Integer[] q1 = new Integer[3];
+        q1[0] = s2;
+        q1[1] = 3;
+        q1[2] = s1;
+        queue.add(q1);
+        Integer[] q2 = new Integer[3];
+        q2[0] = 0;
+        q2[1] = s1;
+        q2[2] = s2;
+        queue.add(q2);
+        Integer[] q3 = new Integer[3];
+        q3[0] = s2;
+        q3[1] = s1;
+        q3[2] = 3;
+        queue.add(q3);
+        Integer[] q4 = new Integer[3];
+        q4[0] = 0;
+        q4[1] = s2;
+        q4[2] = s1;
+        queue.add(q4);
     }
 }

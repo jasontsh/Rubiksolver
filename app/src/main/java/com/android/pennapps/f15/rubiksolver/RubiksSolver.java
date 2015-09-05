@@ -419,6 +419,11 @@ public class RubiksSolver {
             answer[2] = q[2];
             return;
         }
+
+        //randomly rotate bottom?
+        answer[0] = 3;
+        answer[1] = 1;
+        answer[2] = 2;
     }
 
     public boolean state1bb(CubeCorner cc, int s1, int s2){
@@ -543,7 +548,187 @@ public class RubiksSolver {
     }
 
     public void state2(Integer[] answer){
-        
+        if(locked.size() >= 12){
+            state++;
+            state3(answer);
+            return;
+        }
+        CubeSide cs1 = cube.getCenters()[1].getSide(2);
+        if(cs1.getColor(1) == 1 && cs1.getColor(2) == 2){
+            locked.add(cs1);
+        }
+        CubeSide cs2 = cube.getCenters()[2].getSide(4);
+        if(cs2.getColor(2) == 2 && cs2.getColor(4) == 4){
+            locked.add(cs2);
+        }
+        CubeSide cs3 = cube.getCenters()[4].getSide(5);
+        if(cs3.getColor(4) == 4 && cs3.getColor(5) == 5){
+            locked.add(cs3);
+        }
+        CubeSide cs4 = cube.getCenters()[5].getSide(1);
+        if(cs4.getColor(5) == 5 && cs4.getColor(1) == 1){
+            locked.add(cs4);
+        }
+        if(locked.size() >= 12){
+            state++;
+            state3(answer);
+            return;
+        }
+
+        //go through all 4 sides on yellow and see if there are any to be moved down
+        CubeSide cs5 = cube.getCenters()[3].getSide(1);
+        if(cs5.getColor(3) == 4 && cs5.getColor(1) == 2){
+            state2alg(answer, 4, 2);
+            return;
+        } else if (cs5.getColor(3) == 4 && cs5.getColor(1) == 5){
+            state2alg(answer, 4, 5);
+            return;
+        }
+
+        CubeSide cs6 = cube.getCenters()[3].getSide(2);
+        if(cs6.getColor(3) == 5 && cs6.getColor(2) == 4){
+            state2alg(answer, 5, 4);
+            return;
+        } else if(cs6.getColor(3) == 5 && cs6.getColor(2) == 1){
+            state2alg(answer, 5, 1);
+            return;
+        }
+
+        CubeSide cs7 = cube.getCenters()[3].getSide(4);
+        if(cs7.getColor(3) == 1 && cs7.getColor(4) == 5){
+            state2alg(answer, 1, 5);
+            return;
+        } else if(cs7.getColor(3) == 1 && cs7.getColor(4)==2){
+            state2alg(answer, 1, 2);
+            return;
+        }
+
+        CubeSide cs8 = cube.getCenters()[3].getSide(5);
+        if(cs8.getColor(3) == 2 && cs8.getColor(5) == 1){
+            state2alg(answer, 2, 1);
+            return;
+        } else if(cs8.getColor(3) == 2 && cs8.getColor(5) == 4){
+            state2alg(answer, 2, 4);
+            return;
+        }
+
+        if(cs5.getColor(3) != 3 && cs5.getColor(1) != 3){
+            //turn the cs5's 3 towards the opposite of its color
+            int op = (cs5.getColor(3) + 3) % 6;
+            if(op == 1){
+                answer[0] = 3;
+                answer[1] = 1;
+                answer[2] = 2;
+            } else{
+                answer[0] = 3;
+                answer[1] = 1;
+                answer[2] = op;
+            }
+            return;
+        }
+        if(cs6.getColor(3) != 3 && cs6.getColor(2) != 3){
+            int op = (cs6.getColor(3) + 3) % 6;
+            if(op == 2){
+                answer[0] = 3;
+                answer[1] = 1;
+                answer[2] = 2;
+            } else{
+                answer[0] = 3;
+                answer[1] = 2;
+                answer[2] = op;
+            }
+            return;
+        }
+        if(cs7.getColor(3) != 3 && cs7.getColor(4) != 3){
+            int op = (cs7.getColor(3) + 3) % 6;
+            if(op == 4){
+                answer[0] = 3;
+                answer[1] = 1;
+                answer[2] = 2;
+            } else{
+                answer[0] = 3;
+                answer[1] = 4;
+                answer[2] = op;
+            }
+            return;
+        }
+        if(cs8.getColor(3) != 3 && cs8.getColor(5) != 3){
+            //turn the cs5's 3 towards the opposite of its color
+            int op = (cs8.getColor(3) + 3) % 6;
+            if(op == 5){
+                answer[0] = 3;
+                answer[1] = 1;
+                answer[2] = 2;
+            } else{
+                answer[0] = 3;
+                answer[1] = 5;
+                answer[2] = op;
+            }
+            return;
+        }
+        //worst case: one of the cs1-4 are or not being used:
+        if(cs1.getColor(1) != 3 && cs1.getColor(2) != 3){
+            state2alg(answer, 1, 2);
+            return;
+        }
+        if(cs2.getColor(2) != 3 && cs2.getColor(4) != 3){
+            state2alg(answer, 2, 4);
+            return;
+        }
+        if(cs3.getColor(4) != 3 && cs1.getColor(5) != 3){
+            state2alg(answer, 4, 5);
+            return;
+        }
+        if(cs4.getColor(5) != 3 && cs2.getColor(1) != 3){
+            state2alg(answer, 5, 1);
+            return;
+        }
+        //wtf? turn a random way
+        answer[0] = 3;
+        answer[1] = 1;
+        answer[2] = 2;
+    }
+
+    /**
+     *
+     * @param answer
+     * @param s1 the side that starts
+     * @param s2 the other side
+     */
+    public void state2alg(Integer[] answer, int s1, int s2){
+        answer[0] = s1;
+        answer[1] = s2;
+        answer[2] = 3;
+        Integer[] q2 = new Integer[3];
+        q2[0] = 3;
+        q2[1] = s2;
+        q2[2] = s1;
+        queue.add(q2);
+        Integer[] q3 = new Integer[3];
+        q3[0] = s1;
+        q3[1] = 3;
+        q3[2] = s2;
+        queue.add(q3);
+        Integer[] q4 = new Integer[3];
+        q4[0] = 3;
+        q4[1] = s2;
+        q4[2] = s1;
+        queue.add(q4);
+        Integer[] q5 = new Integer[3];
+        q5[0] = s2;
+        q5[1] = s1;
+        q5[2] = 3;
+        queue.add(q5);
+        Integer[] q6 = new Integer[3];
+        q6[0] = 3;
+        q6[1] = s1;
+        q6[2] = s2;
+        queue.add(q6);
+        Integer[] q7 = new Integer[3];
+        q7[0] = s2;
+        q7[1] = 3;
+        q7[2] = s1;
+        queue.add(q7);
     }
     public void state3(Integer[] answer){
 

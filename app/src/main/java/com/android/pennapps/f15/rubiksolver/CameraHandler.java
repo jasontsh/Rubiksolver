@@ -1,7 +1,6 @@
 package com.android.pennapps.f15.rubiksolver;
 
 import android.graphics.Bitmap;
-import android.hardware.Camera;
 
 import java.util.Arrays;
 
@@ -9,25 +8,17 @@ import java.util.Arrays;
  * Created by He on 9/5/2015.
  */
 public class CameraHandler {
-
-    private static enum RubikColor {
-        RED(new int[] { 215, 30, 30 }), GREEN(new int[] { 0, 142, 40 }), BLUE(
-                new int[] { 0, 91, 170 }), ORANGE(new int[] { 243, 138, 36 }), YELLOW(
-                new int[] { 224, 201, 7 }), WHITE(new int[] { 233, 233, 233 }), BLACK(
-                new int[] { 0, 0, 0 });
-
-        private int[] color = null;
-
-        private RubikColor(int[] color) {
-            this.color = color;
-        }
-
-        public int[] getColor() {
-            return color;
-        }
-    }
-
-    private static final int[] CORNERS = { 365, 1917, 706, 2250 };
+    /**
+     * Dimensions of phone screen
+     */
+    public static final int HEIGHT = 0;
+    public static final int WIDTH = 0;
+    /**
+     * The defined square on the android screen where the user will put the rubik cube in the square
+     * and the algorithm will look for the rubik cube in this square
+     */
+    private int[] cornerXY = {(int) (WIDTH * 0.125), (int) (WIDTH * 0.875), (int) (HEIGHT * 0.875),
+            (int) ((HEIGHT * 0.125) + (0.75 * Math.min(WIDTH, HEIGHT)))};
     private static final int CUBE_SIZE = 3;
     private static final int SCAN_SIZE = 60;
 
@@ -35,8 +26,8 @@ public class CameraHandler {
         RubikColor color = null;
         double minDifference = Double.MAX_VALUE;
         for (RubikColor c : RubikColor.values()) {
-            double sum = Math.pow(red - c.getColor()[0], 2) + Math.pow(green - c.getColor()[1], 2)
-                    + Math.pow(blue - c.getColor()[2], 2);
+            double sum = Math.pow(red - c.getColor()[0], 2) + Math.pow(green - c.getColor()[1], 2) +
+                    Math.pow(blue - c.getColor()[2], 2);
             sum = Math.sqrt(sum);
             if (sum < minDifference) {
                 color = c;
@@ -46,11 +37,16 @@ public class CameraHandler {
         return color;
     }
 
-    private RubikColor[][] readImage(Bitmap img) {
-        int slotWidth = (CORNERS[1] - CORNERS[0]) / 3;
+    /**
+     * Reads the bitmap image img and outputs the color of the rubik cube
+     * @param img
+     * @return
+     */
+    public RubikColor[][] readImage(Bitmap img) {
+        int slotWidth = (cornerXY[1] - cornerXY[0]) / 3;
         int slotCenter = slotWidth / 2;
-        int xOffset = CORNERS[0];
-        int yOffset = CORNERS[2];
+        int xOffset = cornerXY[0];
+        int yOffset = cornerXY[2];
         RubikColor[][] colorMap = new RubikColor[CUBE_SIZE][CUBE_SIZE];
         for (int i = 0; i < CUBE_SIZE; ++i) {
             for (int j = 0; j < CUBE_SIZE; ++j) {
@@ -61,7 +57,7 @@ public class CameraHandler {
                  * -> blue colorCounts[3] -> orange colorCounts[4] -> yellow
                  * colorCounts[5] -> white
                  */
-                int[] colorCounts = { 0, 0, 0, 0, 0, 0 };
+                int[] colorCounts = {0, 0, 0, 0, 0, 0};
                 for (int x = projectedX - SCAN_SIZE; x < projectedX + SCAN_SIZE; ++x) {
                     for (int y = projectedY - SCAN_SIZE; y < projectedY + SCAN_SIZE; ++y) {
 
@@ -76,7 +72,9 @@ public class CameraHandler {
                         ++colorCounts[mostLikelyColor.ordinal()];
                     }
                 }
-                System.out.println(i + " " + j + " " + Arrays.toString(colorCounts) + " " + projectedX + " " + projectedY);
+                System.out.println(
+                        i + " " + j + " " + Arrays.toString(colorCounts) + " " + projectedX + " " +
+                                projectedY);
                 RubikColor match = null;
                 int highestMatch = 0;
                 for (int k = 0; k < colorCounts.length; ++k) {

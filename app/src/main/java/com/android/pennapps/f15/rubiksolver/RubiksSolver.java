@@ -25,7 +25,7 @@ public class RubiksSolver {
     }
 
     public Integer[] turn(){
-        if(!queue.isEmpty()){
+        if(!queue.isEmpty()) {
             return queue.remove();
         }
         Integer[] answer = new Integer[3];
@@ -34,6 +34,7 @@ public class RubiksSolver {
             case 1: state1(answer);
             case 2: state2(answer);
             case 3: state3(answer);
+            case 4: state4(answer);
         }
         return answer;
     }
@@ -731,6 +732,75 @@ public class RubiksSolver {
         queue.add(q7);
     }
     public void state3(Integer[] answer){
+        int yb = cube.getCenters()[3].getSide(1).getColor(3);
+        int yr = cube.getCenters()[3].getSide(2).getColor(3);
+        int yg = cube.getCenters()[3].getSide(4).getColor(3);
+        int yo = cube.getCenters()[3].getSide(5).getColor(3);
+        if(yb == 3 && yr == 3 && yg == 3 && yo == 3){
+            state++;
+            state4(answer);
+            return;
+        }
+        if(yb == 3 && yg == 3){
+            state3alg(answer, 2, 4);
+            return;
+        } else if (yr == 3 && yo == 3){
+            state3alg(answer, 4, 5);
+            return;
+        } else if (yb == 3 && yr == 3){
+            state3alg(answer, 4, 5);
+            return;
+        } else if(yr == 3 && yg == 3){
+            state3alg(answer, 5, 1);
+            return;
+        } else if(yg == 3 && yo == 3){
+            state3alg(answer, 1, 2);
+            return;
+        } else if (yo == 3 && yb == 3){
+            state3alg(answer, 2, 4);
+            return;
+        }
+        state3alg(answer, 1, 2);
+    }
 
+    /**
+     *
+     * @param answer
+     * @param s1 left side
+     * @param s2 right side
+     */
+    public void state3alg(Integer[] answer, int s1, int s2){
+        answer[0] = s1;
+        answer[1] = 3;
+        answer[2] = s2;
+        Integer[] q1 = new Integer[3];
+        q1[0] = s2;
+        q1[1] = s1;
+        q1[2] = 3;
+        queue.add(q1);
+        Integer[] q2 = new Integer[3];
+        q2[0] = 3;
+        q2[1] = s2;
+        q2[2] = s1;
+        queue.add(q2);
+        Integer[] q3 = new Integer[3];
+        q3[0] = s2;
+        q3[1] = 3;
+        q3[2] = s1;
+        queue.add(q3);
+        Integer[] q4 = new Integer[3];
+        q4[0] = 3;
+        q4[1] = s1;
+        q4[2] = s2;
+        queue.add(q4);
+        Integer[] q5 = new Integer[3];
+        q5[0] = s1;
+        q5[1] = s2;
+        q5[2] = 3;
+        queue.add(q5);
+    }
+
+    public void state4(Integer[] answer){
+        
     }
 }

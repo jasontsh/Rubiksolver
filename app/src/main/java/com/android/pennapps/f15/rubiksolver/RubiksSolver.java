@@ -32,12 +32,15 @@ public class RubiksSolver {
         switch(state){
             case 0: state0(answer);
             case 1: state1(answer);
+            case 2: state2(answer);
+            case 3: state3(answer);
         }
         return answer;
     }
 
     public void state0(Integer[] answer){
         if(locked.size() >= 4){
+            state++;
             state1(answer);
             return;
         }
@@ -57,6 +60,7 @@ public class RubiksSolver {
             }
         }
         if(locked.size() >= 4){
+            state++;
             state1(answer);
             return;
         }
@@ -324,7 +328,224 @@ public class RubiksSolver {
     }
 
     public void state1(Integer[] answer){
+        if(locked.size() >= 8){
+            state++;
+            state2(answer);
+            return;
+        }
+        //double check stuff
+        HashSet<Integer> s1 = new HashSet<Integer>();
+        s1.add(1);
+        s1.add(2);
+        CubeCorner cc1 = cube.getCenters()[0].getCorner(s1);
+        if(cc1.getColor(0) == 0 && cc1.getColor(1) == 1 && cc1.getColor(2) == 2){
+            locked.add(cc1);
+        }
+        HashSet<Integer> s2 = new HashSet<Integer>();
+        s2.add(2);
+        s2.add(4);
+        CubeCorner cc2 = cube.getCenters()[0].getCorner(s2);
+        if(cc2.getColor(0) == 0 && cc2.getColor(2) == 2 && cc2.getColor(4) == 4){
+            locked.add(cc2);
+        }
+        HashSet<Integer> s3 = new HashSet<Integer>();
+        s3.add(4);
+        s3.add(5);
+        CubeCorner cc3 = cube.getCenters()[0].getCorner(s3);
+        if(cc3.getColor(4) == 4 && cc3.getColor(0) == 0 && cc3.getColor(5) == 5){
+            locked.add(cc3);
+        }
+        HashSet<Integer> s4 = new HashSet<Integer>();
+        s4.add(5);
+        s4.add(1);
+        CubeCorner cc4 = cube.getCenters()[0].getCorner(s4);
+        if(cc4.getColor(0) == 0 && cc4.getColor(5) == 5 && cc4.getColor(1) == 1){
+            locked.add(cc4);
+        }
+        if(locked.size() >= 8){
+            state++;
+            state2(answer);
+            return;
+        }
+        //done double checking, got 4 references of the corners.
+        //bottom corners check sides
+        CubeCorner cc5 = cube.getCenters()[3].getCorner(s1);
+        if(state1bs(cc5, 1, 2) || state1bs(cc5, 2, 1)){
+            Integer[] q = queue.remove();
+            answer[0] = q[0];
+            answer[1] = q[1];
+            answer[2] = q[2];
+            return;
+        }
+        CubeCorner cc6 = cube.getCenters()[3].getCorner(s2);
+        if(state1bs(cc6, 4, 2) || state1bs(cc6, 2, 4)){
+            Integer[] q = queue.remove();
+            answer[0] = q[0];
+            answer[1] = q[1];
+            answer[2] = q[2];
+            return;
+        }
+        CubeCorner cc7 = cube.getCenters()[3].getCorner(s3);
+        if(state1bs(cc7, 4, 5) || state1bs(cc7, 5, 4)){
+            Integer[] q = queue.remove();
+            answer[0] = q[0];
+            answer[1] = q[1];
+            answer[2] = q[2];
+            return;
+        }
+        CubeCorner cc8 = cube.getCenters()[3].getCorner(s4);
+        if(state1bs(cc8, 1, 5) || state1bs(cc8, 5, 1)){
+            Integer[] q = queue.remove();
+            answer[0] = q[0];
+            answer[1] = q[1];
+            answer[2] = q[2];
+            return;
+        }
+
+        //top corners
+        if(state1t(cc1, 1, 2) || state1t(cc2, 4, 2) ||state1t(cc3, 4, 5) || state1t(cc4, 1, 5)){
+            Integer[] q = queue.remove();
+            answer[0] = q[0];
+            answer[1] = q[1];
+            answer[2] = q[2];
+            return;
+        }
+
+        //bottom corner facing bottom
+        if(state1bb(cc5, 1, 2) || state1bb(cc6, 2, 4) || state1bb(cc7, 4, 5) || state1bb(cc8, 1, 5)){
+            Integer[] q = queue.remove();
+            answer[0] = q[0];
+            answer[1] = q[1];
+            answer[2] = q[2];
+            return;
+        }
+    }
+
+    public boolean state1bb(CubeCorner cc, int s1, int s2){
+        if(cc.getColor(3) == 0){
+            if(cc.getColor(s1) == (s2 + 3) % 6 && cc.getColor(s2) == (s1+3)%6 ){
+                Integer[] q1 = new Integer[3];
+                q1[0] = 3;
+                q1[1] = s1;
+                q1[2] = s2;
+                queue.add(q1);
+                return true;
+            }
+            if(cc.getColor(s1) == s1 || cc.getColor(s2) == s2){
+                Integer[] q1 = new Integer[3];
+                q1[0] = 3;
+                q1[1] = cc.getColor(s1) == s1? s1 : s2;
+                q1[2] = cc.getColor(s1) == s1? s2 : s1;
+                queue.add(q1);
+                return true;
+            }
+            Integer[] q1 = new Integer[3];
+            q1[0] = s1;
+            q1[1] = 0;
+            q1[2] = s2;
+            queue.add(q1);
+            Integer[] q2 = new Integer[3];
+            q2[0] = 3;
+            q2[1] = s1;
+            q2[2] = s2;
+            queue.add(q2);
+            Integer[] q3 = new Integer[3];
+            q3[0] = 3;
+            q3[1] = s1;
+            q3[2] = s2;
+            queue.add(q3);
+            Integer[] q4 = new Integer[3];
+            q4[0] = s1;
+            q4[1] = s2;
+            q4[2] = 0;
+            queue.add(q4);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean state1t(CubeCorner cc, int s1, int s2){
+        if(cc.getColor(0) == 0 || cc.getColor(s2) == 0){
+            Integer[] q1 = new Integer[3];
+            q1[0] = s2;
+            q1[1] = 0;
+            q1[2] = s1;
+            queue.add(q1);
+            Integer[] q2 = new Integer[3];
+            q2[0] = 3;
+            q2[1] = s2;
+            q2[2] = s1;
+            queue.add(q1);
+            Integer[] q3 = new Integer[3];
+            q3[0] = s2;
+            q3[1] = s1;
+            q3[2] = 0;
+            queue.add(q2);
+            return true;
+        }else if (cc.getColor(s1) == 0){
+            Integer[] q1 = new Integer[3];
+            q1[0] = s1;
+            q1[1] = 0;
+            q1[2] = s2;
+            queue.add(q1);
+            Integer[] q2 = new Integer[3];
+            q2[0] = 3;
+            q2[1] = s1;
+            q2[2] = s2;
+            queue.add(q2);
+            Integer[] q3 = new Integer[3];
+            q3[0] = s1;
+            q3[1] = s2;
+            q3[2] = 0;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean state1bs(CubeCorner cc, int s1, int s2){
+        if(cc.getColor(s1) == 0){
+            if(cc.getColor(s2) == (s2+3)% 6){
+                Integer[] q1 = new Integer[3];
+                q1[0] = 3;
+                q1[1] = s1;
+                q1[2] = s2;
+                queue.add(q1);
+                Integer[] q2 = new Integer[3];
+                q2[0] = 3;
+                q2[1] = s1;
+                q2[2] = s2;
+                queue.add(q2);
+            } else if(cc.getColor(s2) != s2){
+                Integer[] q1 = new Integer[3];
+                q1[0] = 3;
+                q1[1] = s1;
+                q1[2] = s2;
+                queue.add(q1);
+            }
+            Integer[] q1 = new Integer[3];
+            q1[0] = s1;
+            q1[1] = 0;
+            q1[2] = s2;
+            queue.add(q1);
+            Integer[] q2 = new Integer[3];
+            q2[0] = 3;
+            q2[1] = s1;
+            q2[2] = s2;
+            queue.add(q2);
+            Integer[] q3 = new Integer[3];
+            q3[0] = s1;
+            q3[1] = s2;
+            q3[2] = 0;
+            queue.add(q3);
+            return true;
+        }
+        return false;
+    }
+
+    public void state2(Integer[] answer){
+        
+    }
+    public void state3(Integer[] answer){
 
     }
-    
 }

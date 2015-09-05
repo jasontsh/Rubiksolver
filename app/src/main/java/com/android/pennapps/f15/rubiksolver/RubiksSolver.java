@@ -1,5 +1,6 @@
 package com.android.pennapps.f15.rubiksolver;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -902,9 +903,92 @@ public class RubiksSolver {
 
     public void state5(Integer[] answer){
 
+        HashSet<Integer> s1 = new HashSet<Integer>();
+        s1.add(1);
+        s1.add(2);
+        CubeCorner ybr = cube.getCenters()[3].getCorner(s1);
+
+        HashSet<Integer> s2 = new HashSet<Integer>();
+        s2.add(4);
+        s2.add(2);
+        CubeCorner yrg = cube.getCenters()[3].getCorner(s2);
+
+        HashSet<Integer> s3 = new HashSet<Integer>();
+        s3.add(4);
+        s3.add(5);
+        CubeCorner ygo = cube.getCenters()[3].getCorner(s3);
+
+        Collection<Integer> ybrs = ybr.getValues().values();
+        Collection<Integer> yrgs = yrg.getValues().values();
+        Collection<Integer> ygos = ygo.getValues().values();
+
+        if(ybrs.contains(1) && ybrs.contains(2) && yrgs.contains(2) && yrgs.contains(4)){
+            state++;
+            state6(answer);
+            return;
+        }
+
+        if(ybrs.contains(1) && ybrs.contains(2)){
+            if(ygos.contains(2) && ygos.contains(4)){
+                state5alg(answer, 5, 1);
+            } else{
+                state5alg(answer, 4, 2);
+            }
+        }else{
+            if(yrgs.contains(1) && yrgs.contains(2)){
+                state5alg(answer, 2, 4);
+            } else if(ygos.contains(1) && ygos.contains(2)){
+                state5alg(answer, 1, 2);
+            } else{
+                state5alg(answer, 1, 5);
+            }
+        }
+
     }
 
-    public void state6(Integer[] answers){
+    public void state5alg(Integer[] answer, int s1, int s2){
+        answer[0] = s1;
+        answer[1] = s2;
+        answer[2] = 3;
+        Integer[] q1 = new Integer[3];
+        q1[0] = 3;
+        q1[1] = s2;
+        q1[2] = s1;
+        queue.add(q1);
+        Integer[] q2 = new Integer[3];
+        int op = (s1%3)%2 + 1;
+        q2[0] = op;
+        q2[1] = s2;
+        q2[2] = 3;
+        queue.add(q2);
+        Integer[] q3 = new Integer[3];
+        q3[0] = 3;
+        q3[1] = s1;
+        q3[2] = s2;
+        queue.add(q3);
+        Integer[] q4 = new Integer[3];
+        q4[0] = s1;
+        q4[1] = 3;
+        q4[2] = s2;
+        queue.add(q4);
+        Integer[] q5 = new Integer[3];
+        q5[0] = 3;
+        q5[1] = s2;
+        q5[2] = s1;
+        queue.add(q5);
+        Integer[] q6 = new Integer[3];
+        q6[0] = op;
+        q6[1] = 3;
+        q6[2] = s2;
+        queue.add(q6);
+        Integer[] q7 = new Integer[3];
+        q7[0] = 3;
+        q7[1] = s1;
+        q7[2] = s2;
+        queue.add(q7);
+    }
+
+    public void state6(Integer[] answer){
 
     }
 }

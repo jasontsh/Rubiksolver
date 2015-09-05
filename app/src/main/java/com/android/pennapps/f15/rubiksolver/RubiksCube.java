@@ -27,7 +27,7 @@ public class RubiksCube {
         CubeCorner wrg = new CubeCorner(array[0][2][2], array[2][2][2], array[4][2][2], w, r, g);
         CubeSide br = new CubeSide(array[1][1][0], array[2][0][1], b, r);
         CubeSide rg = new CubeSide(array[2][2][1], array[4][1][2], r, g);
-        CubeSide go = new CubeSide(array[4][1][2], array[5][2][1], g, o);
+        CubeSide go = new CubeSide(array[4][1][0], array[5][2][1], g, o);
         CubeSide bo = new CubeSide(array[1][1][2], array[5][0][1],  b, o);
         CubeCorner ygo = new CubeCorner(array[3][0][0], array[4][0][0], array[5][2][2], y, g, o);
         CubeSide yg = new CubeSide(array[3][1][0], array[4][0][1], y, g);
@@ -163,7 +163,7 @@ public class RubiksCube {
         o4.add(0);
         o4.add(4);
         o.setCorner(o4, wgo);
-
+        centers = new CubeCenter[6];
         centers[0] = w;
         centers[1] = b;
         centers[2] = r;

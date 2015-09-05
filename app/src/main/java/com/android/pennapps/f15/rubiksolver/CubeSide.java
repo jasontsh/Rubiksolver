@@ -43,4 +43,12 @@ public class CubeSide extends CubePart{
             color2On = to;
         }
     }
+
+    public int getOtherColor(int centercolor){
+        if (centercolor == color1On){
+            return color2;
+        } else{
+            return color1;
+        }
+    }
 }

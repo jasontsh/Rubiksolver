@@ -41,4 +41,8 @@ public class CubeCenter extends CubePart{
         return color;
     }
 
+    public void change(int from, int to){
+
+    }
+
 }

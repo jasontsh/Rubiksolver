@@ -5,16 +5,16 @@ package com.android.pennapps.f15.rubiksolver;
  */
 public class CubeSide extends CubePart{
     int color1, color2;
-    CubeCenter color1On, color2On;
-    public CubeSide(int c1,int c2, CubeCenter cc1, CubeCenter cc2){
+    int color1On, color2On;
+    public CubeSide(int c1,int c2, int cc1, int cc2){
         color1 = c1;
         color2 = c2;
         color1On = cc1;
         color2On = cc2;
     }
 
-    public CubeCenter[] nextTo(){
-        CubeCenter[] ans = new CubeCenter[2];
+    public int[] nextTo(){
+        int[] ans = new int[2];
         ans[0] = color1On;
         ans[1] = color2On;
         return ans;
@@ -29,10 +29,18 @@ public class CubeSide extends CubePart{
     }
 
     public int getColor(int centercolor){
-        if (centercolor == color1On.getColor()){
+        if (centercolor == color1On){
             return color1;
         } else{
             return color2;
+        }
+    }
+
+    public void change(int from, int to){
+        if (color1On == from){
+            color1On = to;
+        } else{
+            color2On = to;
         }
     }
 }

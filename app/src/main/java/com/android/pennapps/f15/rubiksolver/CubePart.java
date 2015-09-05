@@ -12,4 +12,6 @@ public abstract class CubePart {
     public static int O = 5;
 
     public abstract int getColor(int centercolor);
+
+    public abstract void change(int from, int to);
 }

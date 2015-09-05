@@ -45,4 +45,19 @@ public class CubeCenter extends CubePart{
 
     }
 
+    public boolean equals(Object other){
+        if(other == null){
+            return false;
+        }
+        if(!(other instanceof CubeCenter)){
+            return false;
+        }
+        CubeCenter cc = (CubeCenter) other;
+        return cc.getColor() == getColor();
+    }
+
+    public int hashCode(){
+        return getColor();
+    }
+
 }

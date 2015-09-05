@@ -1,5 +1,8 @@
 package com.android.pennapps.f15.rubiksolver;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Jason on 9/4/2015.
  */
@@ -50,5 +53,26 @@ public class CubeSide extends CubePart{
         } else{
             return color1;
         }
+    }
+
+    public Map<Integer, Integer> getValues(){
+        HashMap<Integer, Integer> ans = new HashMap<Integer,Integer>();
+        ans.put(color1On, color1);
+        ans.put(color2On, color2);
+        return ans;
+    }
+
+    public boolean equals(Object other){
+        if(other == null){
+            return false;
+        }
+        if(!(other instanceof CubeSide)){
+            return false;
+        }
+        return ((CubeSide) other).getValues().equals(getValues());
+    }
+
+    public int hashCode(){
+        return getValues().hashCode();
     }
 }

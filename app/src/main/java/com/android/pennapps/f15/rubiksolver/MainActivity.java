@@ -46,10 +46,11 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mCamera = CameraView.getCameraInstance();
+        mCamera.setDisplayOrientation(90);
         mCameraView = new CameraView(this, mCamera);
         RelativeLayout preview = (RelativeLayout) findViewById(R.id.relativeLayoutMain);
         preview.addView(mCameraView);
-        mCamera.setPreviewCallback(previewCallback);
+        //mCamera.setPreviewCallback(previewCallback);
     }
 
     @Override

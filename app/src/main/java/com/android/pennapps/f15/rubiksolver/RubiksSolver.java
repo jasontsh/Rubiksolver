@@ -35,6 +35,8 @@ public class RubiksSolver {
             case 2: state2(answer);
             case 3: state3(answer);
             case 4: state4(answer);
+            case 5: state5(answer);
+            case 6: state6(answer);
         }
         return answer;
     }
@@ -801,6 +803,108 @@ public class RubiksSolver {
     }
 
     public void state4(Integer[] answer){
-        
+        if(locked.size() >= 16){
+            state++;
+            state5(answer);
+            return;
+        }
+        CubeSide yb = cube.getCenters()[3].getSide(1);
+        CubeSide yr = cube.getCenters()[3].getSide(2);
+        CubeSide yg = cube.getCenters()[3].getSide(4);
+        CubeSide yo = cube.getCenters()[3].getSide(5);
+
+        if(yb.getColor(1) == 1){
+            locked.add(yb);
+        }
+        if(yr.getColor(2) == 2){
+            locked.add(yr);
+        }
+        if(yg.getColor(4) == 4){
+            locked.add(yg);
+        }
+        if(yo.getColor(5) == 5){
+            locked.add(yo);
+        }
+        if(locked.size() >= 16){
+            state++;
+            state5(answer);
+            return;
+        }
+        //want to order b-r-g-o as ascending, and the shuffle is at a point where either the
+        //2nd or 3rd number is the biggest, and the rest is ascending
+        //keep add 6 to each one...
+        //keep rotating until blue is at blue
+        if(yb.getColor(1) != 1){
+            if(yr.getColor(2) == 1){
+                answer[0] = 3;
+                answer[1] = 2;
+                answer[2] = 1;
+            } else{
+                answer[0] = 3;
+                answer[1] = 5;
+                answer[2] = 1;
+            }
+            return;
+        }
+        if(yr.getColor(2) == 2 && yg.getColor(4) == 5) {
+            state4alg(answer, 2, 4);
+        } else if(yr.getColor(2) == 5 && yg.getColor(4) == 4){
+            state4alg(answer, 5, 1);
+        } else if(yr.getColor(2) == 4 && yg.getColor(4) == 2){
+            state4alg(answer, 5, 4);
+        } else if(yr.getColor(2) == 5 && yg.getColor(4) == 2) {
+            state4alg(answer, 5, 1);
+        } else if(yr.getColor(2) == 4 && yg.getColor(4) == 5){
+            state4alg(answer, 2, 1);
+        }
+    }
+
+    public void state4alg(Integer[] answer, int turnside, int ad){
+        answer[0] = turnside;
+        answer[1] = ad;
+        answer[2] = 3;
+        Integer[] q1 = new Integer[3];
+        q1[0] = 3;
+        q1[1] = turnside;
+        q1[2] = ad;
+        queue.add(q1);
+        Integer[] q2 = new Integer[3];
+        q2[0] = turnside;
+        q2[1] = 3;
+        q2[2] = ad;
+        queue.add(q2);
+        Integer[] q3 = new Integer[3];
+        q3[0] = 3;
+        q3[1] = turnside;
+        q3[2] = ad;
+        queue.add(q3);
+        Integer[] q4 = new Integer[4];
+        q4[0] = turnside;
+        q4[1] = ad;
+        q4[2] = 3;
+        queue.add(q4);
+        Integer[] q5 = new Integer[3];
+        q5[0] = 3;
+        q5[1] = turnside;
+        q5[2] = ad;
+        queue.add(q5);
+        Integer[] q6 = new Integer[3];
+        q6[0] = 3;
+        q6[1] = turnside;
+        q6[2] = ad;
+        queue.add(q6);
+        Integer[] q7 = new Integer[3];
+        q7[0] = turnside;
+        q7[1] = 3;
+        q7[2] = ad;
+        queue.add(q7);
+    }
+
+    public void state5(Integer[] answer){
+
+    }
+
+    public void state6(Integer[] answers){
+
     }
 }

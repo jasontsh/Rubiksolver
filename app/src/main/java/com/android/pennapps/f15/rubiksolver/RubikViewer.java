@@ -161,12 +161,26 @@ public class RubikViewer extends AppCompatActivity {
         }
         Integer[] turn = rs.turn();
         TextView commands = (TextView) findViewById(R.id.commands);
-        commands.setText(getCommand(turn, side).getText());
+        commands.setText(getCommand(turn, side).getText() + "; On " + ttos(turn[0]) + " from " +
+                ttos(turn[1]) + " to " + ttos(turn[2]));
         rc.turn(turn[0], turn[1], turn[2]);
         updateGraphics(side);
     }
 
+    public String ttos(int i){
+        switch(i){
+            case 1: return "Blue";
+            case 2: return "Red";
+            case 3: return "Yellow";
+            case 4: return "Green";
+            case 5: return "Orange";
+            case 0:
+            default: return "White";
+        }
+    }
+
     public void reset(View v){
+        InputActivity.state = 0;
         Intent intent = new Intent(this, InputActivity.class);
         startActivity(intent);
         finish();

@@ -16,4 +16,5 @@
         <item>G</item>
         <item>O</item>
     </string-array>
+    <string name="title_activity_rubik_viewer">RubikViewer</string>
 </resources>

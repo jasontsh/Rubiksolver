@@ -36,9 +36,9 @@ public class RubiksSolver {
         switch(state){
             case 0: state0(answer); break;
             case 1: state1(answer); break;
-//            case 2: state2(answer); break;
-//            case 3: state3(answer); break;
-//            case 4: state4(answer); break;
+            case 2: state2(answer); break;
+            case 3: state3(answer); break;
+            case 4: state4(answer); break;
 //            case 5: state5(answer); break;
 //            case 6: state6(answer); break;
         }
@@ -448,7 +448,7 @@ public class RubiksSolver {
                 Integer[] q2 = new Integer[3];
                 q2[0] = 3;
                 q2[1] = s2;
-                q2[3] = s1;
+                q2[2] = s1;
                 queue.add(q2);
                 Integer[] q3 = new Integer[3];
                 q3[0] = 3;
@@ -481,12 +481,12 @@ public class RubiksSolver {
             q2[0] = 3;
             q2[1] = s2;
             q2[2] = s1;
-            queue.add(q1);
+            queue.add(q2);
             Integer[] q3 = new Integer[3];
             q3[0] = s2;
             q3[1] = s1;
             q3[2] = 0;
-            queue.add(q2);
+            queue.add(q3);
             return true;
         }else if (cc.getColor(s1) == 0){
             Integer[] q1 = new Integer[3];
@@ -503,6 +503,7 @@ public class RubiksSolver {
             q3[0] = s1;
             q3[1] = s2;
             q3[2] = 0;
+            queue.add(q3);
             return true;
         }
         return false;
@@ -656,6 +657,7 @@ public class RubiksSolver {
             } else{
                 answer[0] = 3;
                 answer[1] = 1;
+                System.out.println(op);
                 answer[2] = op;
             }
             return;
@@ -986,7 +988,7 @@ public class RubiksSolver {
         q1[2] = s1;
         queue.add(q1);
         Integer[] q2 = new Integer[3];
-        int op = (s1%3)%2 + 1;
+        int op = (s1 + 3) % 6;
         q2[0] = op;
         q2[1] = s2;
         q2[2] = 3;
@@ -1038,6 +1040,14 @@ public class RubiksSolver {
         s4.add(5);
         s4.add(1);
         CubeCorner yob = cube.getCenters()[3].getCorner(s4);
+
+        if(ybr.getColor(3) == 3 && ybr.getColor(1) == 1 && ybr.getColor(2) == 2
+                && yrg.getColor(3) == 3 && yrg.getColor(2) == 2 && yrg.getColor(4)
+                == 4 && ygo.getColor(3) == 3&& ygo.getColor(4) == 4 &&
+                ygo.getColor(5) == 5 && yob.getColor(3) == 3 && yob.getColor(5) == 5
+                && yob.getColor(1) == 1){
+            return;
+        }
 
         int start = 0;
         if(ybr.getColor(1) == 3){

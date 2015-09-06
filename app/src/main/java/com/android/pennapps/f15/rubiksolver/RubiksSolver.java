@@ -376,7 +376,9 @@ public class RubiksSolver {
             state2(answer);
             return;
         }
+
         //done double checking, got 4 references of the corners.
+
         //bottom corners check sides
         CubeCorner cc5 = cube.getCenters()[3].getCorner(s1);
         if(state1bs(cc5, 1, 2) || state1bs(cc5, 2, 1)){
@@ -437,43 +439,29 @@ public class RubiksSolver {
 
     public boolean state1bb(CubeCorner cc, int s1, int s2){
         if(cc.getColor(3) == 0){
-            if(cc.getColor(s1) == (s2 + 3) % 6 && cc.getColor(s2) == (s1+3)%6 ){
+            if(cc.getColor(s1) == s2 ){
                 Integer[] q1 = new Integer[3];
-                q1[0] = 3;
-                q1[1] = s1;
-                q1[2] = s2;
+                q1[0] = s2;
+                q1[1] = 0;
+                q1[2] = s1;
                 queue.add(q1);
+                Integer[] q2 = new Integer[3];
+                q2[0] = 3;
+                q2[1] = s2;
+                q2[3] = s1;
+                queue.add(q2);
+                Integer[] q3 = new Integer[3];
+                q3[0] = 3;
+                q3[1] = s2;
+                q3[2] = s1;
+                queue.add(q3);
+                Integer[] q4 = new Integer[3];
+                q4[0] = s2;
+                q4[1] = s1;
+                q4[2] = 0;
+                queue.add(q4);
                 return true;
             }
-            if(cc.getColor(s1) == s1 || cc.getColor(s2) == s2){
-                Integer[] q1 = new Integer[3];
-                q1[0] = 3;
-                q1[1] = cc.getColor(s1) == s1? s2 : s1;
-                q1[2] = cc.getColor(s1) == s1? s1 : s2;
-                queue.add(q1);
-                return true;
-            }
-            Integer[] q1 = new Integer[3];
-            q1[0] = s1;
-            q1[1] = 0;
-            q1[2] = s2;
-            queue.add(q1);
-            Integer[] q2 = new Integer[3];
-            q2[0] = 3;
-            q2[1] = s1;
-            q2[2] = s2;
-            queue.add(q2);
-            Integer[] q3 = new Integer[3];
-            q3[0] = 3;
-            q3[1] = s1;
-            q3[2] = s2;
-            queue.add(q3);
-            Integer[] q4 = new Integer[3];
-            q4[0] = s1;
-            q4[1] = s2;
-            q4[2] = 0;
-            queue.add(q4);
-            return true;
         }
         return false;
     }
@@ -522,24 +510,7 @@ public class RubiksSolver {
 
     public boolean state1bs(CubeCorner cc, int s1, int s2){
         if(cc.getColor(s1) == 0){
-            if(cc.getColor(s2) == (s2+3)% 6){
-                Integer[] q1 = new Integer[3];
-                q1[0] = 3;
-                q1[1] = s1;
-                q1[2] = s2;
-                queue.add(q1);
-                Integer[] q2 = new Integer[3];
-                q2[0] = 3;
-                q2[1] = s1;
-                q2[2] = s2;
-                queue.add(q2);
-            } else if(cc.getColor(s2) != s2){
-                Integer[] q1 = new Integer[3];
-                q1[0] = 3;
-                q1[1] = s1;
-                q1[2] = s2;
-                queue.add(q1);
-            }else{
+            if(cc.getColor(s2) == s2){
                 Integer[] q1 = new Integer[3];
                 q1[0] = s1;
                 q1[1] = 0;
@@ -556,9 +527,58 @@ public class RubiksSolver {
                 q3[2] = 0;
                 queue.add(q3);
             }
+            else if(cc.getColor(s2) == (s2 + 3) % 6){
+                Integer[] q1 = new Integer[3];
+                q1[0] = 3;
+                q1[1] = s1;
+                q1[2] = s2;
+                queue.add(q1);
+                Integer[] q2 = new Integer[3];
+                q2[0] = 3;
+                q2[1] = s1;
+                q2[2] = s2;
+                queue.add(q2);
+                Integer[] q3 = new Integer[3];
+                q3[0] = (s1 + 3) % 6;
+                q3[1] = 0;
+                q3[2] = (s2 + 3) % 6;
+                queue.add(q3);
+                Integer[] q4 = new Integer[3];
+                q4[0] = 3;
+                q4[1] = (s1 + 3) % 6;
+                q4[2] = (s2 + 3) % 6;
+                queue.add(q4);
+                Integer[] q5 = new Integer[3];
+                q5[0] = (s1 + 3) % 6;
+                q5[1] = (s2 + 3) % 6;
+                q5[2] = 0;
+                queue.add(q5);
+            } else{
+                Integer[] q1 = new Integer[3];
+                q1[0] = 3;
+                q1[1] = s2;
+                q1[2] = cc.getColor(s2);
+                queue.add(q1);
+                Integer[] q2 = new Integer[3];
+                q2[0] = cc.getColor(3);
+                q2[1] = 0;
+                q2[2] = cc.getColor(s2);
+                queue.add(q2);
+                Integer[] q3 = new Integer[3];
+                q3[0] = 3;
+                q3[1] = cc.getColor(s2);
+                q3[2] = s2;
+                queue.add(q3);
+                Integer[] q4 = new Integer[3];
+                q4[0] = cc.getColor(3);
+                q4[1] = cc.getColor(s2);
+                q4[2] = 0;
+                queue.add(q4);
+            }
             return true;
         }
         return false;
+
     }
 
     public void state2(Integer[] answer){

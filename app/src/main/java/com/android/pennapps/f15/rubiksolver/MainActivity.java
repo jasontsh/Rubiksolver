@@ -42,11 +42,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected  void onPause() {
-        super.onPause();
-    }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -94,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(currentState != SetUpStates.SOLVE) {
+                if(currentState != SetupState.SOLVE) {
                     RubikColor[][] colorMap = handler.getCurrentLoadedColorMap();
                     if (colorMap == null) {
                         return;

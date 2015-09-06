@@ -22,29 +22,17 @@ import android.widget.RelativeLayout;
 import java.io.ByteArrayOutputStream;
 
 public class ARActivity extends AppCompatActivity {
-    private SetupState currentState = SetupState.SHOW_SIDE_WHITE;
     private Camera mCamera = null;
     private CameraView mCameraView = null;
-    private int width, height;
-
     private CameraHandler handler = null;
 
-    private Context mContext = this;
-    private Activity mActivity = this;
     private Camera.PreviewCallback previewCallback = null;
-    private RubikColor[][][] cube = new RubikColor[9][3][3];
-
-    public SetupState getCurrentState() {
-        return currentState;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Display display = getWindowManager().getDefaultDisplay();
-        width = display.getWidth();
-        height = display.getHeight();
         mCamera = CameraView.getCameraInstance();
         mCamera.setDisplayOrientation(90);
         Camera.Size previewSize = mCamera.getParameters().getPreviewSize();

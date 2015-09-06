@@ -1140,4 +1140,8 @@ public class RubiksSolver {
         q8[2] = s1;
         queue.add(q8);
     }
+
+    public int getState(){
+        return state;
+    }
 }

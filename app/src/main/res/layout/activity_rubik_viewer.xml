@@ -94,7 +94,7 @@
             android:textSize="40dp"
             android:layout_columnSpan="4"
             android:layout_rowSpan="6"
-            android:layout_row="8"
+            android:layout_row="6"
             android:id="@+id/commands"
             android:layout_column="0"/>
 

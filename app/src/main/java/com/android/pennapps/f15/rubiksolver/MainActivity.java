@@ -1,5 +1,8 @@
 package com.android.pennapps.f15.rubiksolver;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ImageFormat;
@@ -33,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
 
     private CameraHandler handler = null;
 
+    private Context mContext = this;
+    private Activity mActivity = this;
     private Camera.PreviewCallback previewCallback = null;
 
     public SetUpStates getCurrentState() {
@@ -83,6 +88,40 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button updateButton = (Button) findViewById(R.id.set_update_button);
+        updateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(currentState != SetUpStates.SOLVE) {
+                    RubikColor[][] colorMap = handler.getCurrentLoadedColorMap();
+                    if (colorMap == null) {
+                        return;
+                    }
+                    int[][] intColorMap = new int[3][3];
+                    for (int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 3; j++) {
+                            if (colorMap[i][j] == null) {
+                                return;
+                            }
+                            switch(colorMap[i][j]){
+                                case RED: intColorMap[i][j] = 2;
+                                case BLUE: intColorMap[i][j] = 1;
+                                case WHITE: intColorMap[i][j] = 0;
+                                case YELLOW: intColorMap[i][j] = 3;
+                                case GREEN: intColorMap[i][j] = 4;
+                                case ORANGE: intColorMap[i][j] = 5;
+                            }
+                        }
+                    }
+
+                    Intent intent = new Intent(mContext, UpdateValues.class);
+                    intent.putExtra("currentState", currentState.ordinal());
+                    intent.putExtra("map", intColorMap);
+                    mActivity.startActivityForResult(intent, 1);
+                }
+            }
+        });
+
         previewCallback = new Camera.PreviewCallback() {
 
             @Override
@@ -111,25 +150,17 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    protected void onPause(){
+        super.onPause();
+        mCamera.release();
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    protected void onResume(){
+        super.onResume();
+        mCamera.open();
     }
 }

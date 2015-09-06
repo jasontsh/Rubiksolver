@@ -629,7 +629,7 @@ public class RubiksSolver {
         if(cs5.getColor(3) != 3 && cs5.getColor(1) != 3){
             //turn the cs5's 3 towards the opposite of its color
             int op = (cs5.getColor(3) + 3) % 6;
-            if(op == 1){
+            if(op == 1 || op == 4){
                 answer[0] = 3;
                 answer[1] = 1;
                 answer[2] = 2;
@@ -642,7 +642,7 @@ public class RubiksSolver {
         }
         if(cs6.getColor(3) != 3 && cs6.getColor(2) != 3){
             int op = (cs6.getColor(3) + 3) % 6;
-            if(op == 2){
+            if(op == 2 || op == 5){
                 answer[0] = 3;
                 answer[1] = 1;
                 answer[2] = 2;
@@ -655,7 +655,7 @@ public class RubiksSolver {
         }
         if(cs7.getColor(3) != 3 && cs7.getColor(4) != 3){
             int op = (cs7.getColor(3) + 3) % 6;
-            if(op == 4){
+            if(op == 4 || op == 1){
                 answer[0] = 3;
                 answer[1] = 1;
                 answer[2] = 2;
@@ -669,7 +669,7 @@ public class RubiksSolver {
         if(cs8.getColor(3) != 3 && cs8.getColor(5) != 3){
             //turn the cs5's 3 towards the opposite of its color
             int op = (cs8.getColor(3) + 3) % 6;
-            if(op == 5){
+            if(op == 5 || op == 2){
                 answer[0] = 3;
                 answer[1] = 1;
                 answer[2] = 2;

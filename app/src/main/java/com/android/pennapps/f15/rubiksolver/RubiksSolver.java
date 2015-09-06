@@ -39,7 +39,7 @@ public class RubiksSolver {
             case 2: state2(answer); break;
             case 3: state3(answer); break;
             case 4: state4(answer); break;
-//            case 5: state5(answer); break;
+            case 5: state5(answer); break;
 //            case 6: state6(answer); break;
         }
         return answer;
@@ -657,7 +657,6 @@ public class RubiksSolver {
             } else{
                 answer[0] = 3;
                 answer[1] = 1;
-                System.out.println(op);
                 answer[2] = op;
             }
             return;
@@ -1049,108 +1048,50 @@ public class RubiksSolver {
             return;
         }
 
-        int start = 0;
         if(ybr.getColor(1) == 3){
-            start = 1;
             state6alg(1, 2);
         } else if(ybr.getColor(2) == 3){
-            start = 1;
             state6alg(1, 2);
             state6alg(1, 2);
         }
-
+        Integer[] r1 = new Integer[3];
+        r1[0] = 3;
+        r1[1] = 2;
+        r1[2] = 1;
+        queue.add(r1);
         if(yrg.getColor(3) != 3){
-            if(start == 1){
-                Integer[] r1 = new Integer[3];
-                r1[0] = 3;
-                r1[1] = 2;
-                r1[2] = 1;
-                queue.add(r1);
-                state6alg(1, 2);
-                if(yrg.getColor(4)==3){
-                    state6alg(1,2);
-                }
-            }else{
-                state6alg(2, 4);
-                if(yrg.getColor(4)==3){
-                    state6alg(2, 4);
-                }
-                start = 2;
+            state6alg(1, 2);
+            if(yrg.getColor(4)==3){
+                state6alg(1,2);
             }
         }
-
+        Integer[] r2 = new Integer[3];
+        r2[0] = 3;
+        r2[1] = 2;
+        r2[2] = 1;
+        queue.add(r2);
         if(ygo.getColor(3) != 3){
-            if(start != 0){
-                if(start == 1){
-                    Integer[] r1 = new Integer[3];
-                    r1[0] = 3;
-                    r1[1] = 2;
-                    r1[2] = 1;
-                    queue.add(r1);
-                }
-                Integer[] r1 = new Integer[3];
-                r1[0] = 3;
-                r1[1] = 2;
-                r1[2] = 1;
-                queue.add(r1);
-                if(start == 1){
-                    state6alg(1, 2);
-                    if(ygo.getColor(5) == 3){
-                        state6alg(1, 2);
-                    }
-                } else if(start == 2) {
-                    state6alg(2, 4);
-                    if (ygo.getColor(5) == 3) {
-                        state6alg(2, 4);
-                    }
-                }
-            }else{
-                state6alg(4, 5);
-                if(ygo.getColor(5) == 3){
-                    state6alg(4, 5);
-                }
-                start = 3;
-            }
-        }
-
-        if(yob.getColor(3) != 3){
-            if(start == 1){
-                Integer[] r1 = new Integer[3];
-                r1[0] = 3;
-                r1[1] = 1;
-                r1[2] = 2;
-                queue.add(r1);
+            state6alg(1, 2);
+            if(ygo.getColor(5) == 3){
                 state6alg(1, 2);
-                if(yob.getColor(1)== 3){
-                    state6alg(1, 2);
-                }
-            }
-            if(start > 1){
-                if(start == 2){
-                    Integer[] r1 = new Integer[3];
-                    r1[0] = 3;
-                    r1[1] = 2;
-                    r1[2] = 1;
-                    queue.add(r1);
-                }
-                Integer[] r1 = new Integer[3];
-                r1[0] = 3;
-                r1[1] = 2;
-                r1[2] = 1;
-                queue.add(r1);
-                if(start == 2){
-                    state6alg(2, 4);
-                    if(yob.getColor(1) == 3){
-                        state6alg(2, 4);
-                    }
-                }else{
-                    state6alg(4, 5);
-                    if(yob.getColor(1) == 3){
-                        state6alg(4, 5);
-                    }
-                }
             }
         }
+        Integer[] r3 = new Integer[3];
+        r3[0] = 3;
+        r3[1] = 2;
+        r3[2] = 1;
+        queue.add(r3);
+        if(yob.getColor(3) != 3){
+            state6alg(1, 2);
+            if(yob.getColor(1)== 3){
+                state6alg(1, 2);
+            }
+        }
+        Integer[] r4 = new Integer[3];
+        r4[0] = 3;
+        r4[1] = 2;
+        r4[2] = 1;
+        queue.add(r4);
         Integer[] b = queue.remove();
         answer[0] = b[0];
         answer[1] = b[1];
@@ -1178,5 +1119,25 @@ public class RubiksSolver {
         q4[1] = s2;
         q4[2] = s1;
         queue.add(q4);
+        Integer[] q5 = new Integer[3];
+        q5[0] = s2;
+        q5[1] = 3;
+        q5[2] = s1;
+        queue.add(q5);
+        Integer[] q6 = new Integer[3];
+        q6[0] = 0;
+        q6[1] = s1;
+        q6[2] = s2;
+        queue.add(q6);
+        Integer[] q7 = new Integer[3];
+        q7[0] = s2;
+        q7[1] = s1;
+        q7[2] = 3;
+        queue.add(q7);
+        Integer[] q8 = new Integer[3];
+        q8[0] = 0;
+        q8[1] = s2;
+        q8[2] = s1;
+        queue.add(q8);
     }
 }

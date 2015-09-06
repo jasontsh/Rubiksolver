@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
          * Ordinal 4, 8 are repeats of ordinal 0
          * Ordinal 6 is a repeat of ordinal 2
          */
-        final RubikColor[][][] cube = new RubikColor[6][3][3];
+        final RubikColor[][][] cube = new RubikColor[9][3][3];
         setButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

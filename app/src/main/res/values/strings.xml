@@ -3,4 +3,18 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_update_values">UpdateValues</string>
+    <string name="button_side">Set Side</string>
+    <string name="button_update">Manual Set</string>
+    <string name="button_set">Set</string>
+    <string name="button_cancel">Cancel</string>
+    <string-array name="manual_spinner_values">
+        <item>W</item>
+        <item>B</item>
+        <item>R</item>
+        <item>Y</item>
+        <item>G</item>
+        <item>O</item>
+    </string-array>
+    <string name="title_activity_rubik_viewer">RubikViewer</string>
 </resources>

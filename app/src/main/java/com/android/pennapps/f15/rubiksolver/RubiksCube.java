@@ -59,7 +59,7 @@ public class RubiksCube {
 
         b.setSide(0, wb);
         b.setSide(2, br);
-        b.setSide(4, by);
+        b.setSide(3, by);
         b.setSide(5, bo);
         HashSet<Integer> b1 = new HashSet<Integer>();
         b1.add(0);

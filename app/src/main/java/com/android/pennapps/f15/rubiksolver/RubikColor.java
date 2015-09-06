@@ -17,4 +17,8 @@ public enum RubikColor {
     public int[] getColor() {
         return color;
     }
+
+    public int getHexColor() {
+        return (0xff << 24) + (color[0] << 16) + (color[1] << 8) + color[2];
+    }
 }

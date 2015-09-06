@@ -8,49 +8,107 @@ import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
+    public MainActivity() {
+        super();
+    }
+
+    private SetUpStates currentState = SetUpStates.SHOW_SIDE_WHITE;
     private Camera mCamera = null;
     private CameraView mCameraView = null;
+    private int width, height;
 
-    Camera.PreviewCallback previewCallback = new Camera.PreviewCallback() {
+    private CameraHandler handler = null;
 
-        CameraHandler handler = new CameraHandler();
+    private Camera.PreviewCallback previewCallback = null;
 
-        @Override
-        public void onPreviewFrame(byte[] data, Camera camera) {
-                execute(data);
-        }
-
-        private void execute(byte[] data) {
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            YuvImage yuvImg = new YuvImage(data, ImageFormat.NV21, CameraHandler.WIDTH, CameraHandler.HEIGHT, null);
-            yuvImg.compressToJpeg(new Rect(0, 0, CameraHandler.WIDTH, CameraHandler.HEIGHT), 50, out);
-            byte[] imageBytes = out.toByteArray();
-            Bitmap image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-            RubikColor[][] imageMap = handler.readImage(image);
-        }
-    };
+    public SetUpStates getCurrentState() {
+        return currentState;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        Display display = getWindowManager().getDefaultDisplay();
+        width = display.getWidth();
+        height = display.getHeight();
         mCamera = CameraView.getCameraInstance();
         mCamera.setDisplayOrientation(90);
-        mCameraView = new CameraView(this, mCamera);
+        Camera.Size previewSize = mCamera.getParameters().getPreviewSize();
+        handler = new CameraHandler(previewSize.width, previewSize.height);
+
+        Button setButton = (Button) findViewById(R.id.set_side_button);
+        /**
+         * Ordinal 4, 8 are repeats of ordinal 0
+         * Ordinal 6 is a repeat of ordinal 2
+         */
+        final RubikColor[][][] cube = new RubikColor[6][3][3];
+        setButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(currentState != SetUpStates.SOLVE) {
+                    RubikColor[][] colorMap = handler.getCurrentLoadedColorMap();
+                    if(colorMap == null) {
+                        return;
+                    }
+                    for(int i = 0; i < 3; i++) {
+                        for (int j = 0; j < 3; j++) {
+                            if(colorMap[i][j] == null) {
+                                return;
+                            }
+                        }
+                    }
+
+                    cube[currentState.ordinal()] = colorMap;
+
+                    currentState = SetUpStates.values()[currentState.ordinal() + 1];
+
+                    // colorMap = the 2d array with the 9 colors
+                    // store current cube info
+                }
+            }
+        });
+
+        previewCallback = new Camera.PreviewCallback() {
+
+            @Override
+            public void onPreviewFrame(byte[] data, Camera camera)  {
+                execute(data);
+            }
+
+            private void execute(byte[] data) {
+                Camera.Size previewSize = mCamera.getParameters().getPreviewSize();
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                YuvImage yuvImg = new YuvImage(data, ImageFormat.NV21, previewSize.width, previewSize.height, null);
+                yuvImg.compressToJpeg(new Rect(0, 0, previewSize.width, previewSize.height), 50, out);
+                byte[] imageBytes = out.toByteArray();
+                Bitmap image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
+                if(image == null) {
+                    System.out.println("NULL IMAGE PREVIEW");
+                } else {
+                    RubikColor[][] imageMap = handler.readImage(image);
+                }
+            }
+        };
+        mCameraView = new CameraView(this, this, mCamera, handler);
         RelativeLayout preview = (RelativeLayout) findViewById(R.id.relativeLayoutMain);
         preview.addView(mCameraView);
-        //mCamera.setPreviewCallback(previewCallback);
+        mCamera.setPreviewCallback(previewCallback);
+
     }
 
     @Override

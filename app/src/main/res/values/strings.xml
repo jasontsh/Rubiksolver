@@ -6,6 +6,8 @@
     <string name="title_activity_update_values">UpdateValues</string>
     <string name="button_side">Set Side</string>
     <string name="button_update">Manual Set</string>
+    <string name="button_set">Set</string>
+    <string name="button_cancel">Cancel</string>
     <string-array name="manual_spinner_values">
         <item>W</item>
         <item>B</item>

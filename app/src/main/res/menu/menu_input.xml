@@ -1,7 +1,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.android.pennapps.f15.rubiksolver.UpdateValues">
+    tools:context="com.android.pennapps.f15.rubiksolver.InputActivity">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_ar"
+        android:title="@string/ar_link"
+        android:icon="@drawable/ic_surround_sound_white_36dp"
+        app:showAsAction="always"
+        android:orderInCategory="1"/>
 </menu>

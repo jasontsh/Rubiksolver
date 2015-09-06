@@ -18,9 +18,9 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, R
     private Camera mCamera = null;
     private boolean on = false;
     private CameraHandler handler = null;
-    private MainActivity mainActivity = null;
+    private ARActivity mainActivity = null;
 
-    public CameraView(MainActivity main, Context context, Camera camera, CameraHandler handler) {
+    public CameraView(ARActivity main, Context context, Camera camera, CameraHandler handler) {
         super(context);
         mainActivity = main;
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
@@ -67,8 +67,8 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, R
         }
         Paint textPaint = new Paint();
         textPaint.setColor(0xFFFFFFFF);
-        textPaint.setTextSize(20);
-        cv.drawText(mainActivity.getCurrentState().getText(), 50, 50, textPaint);
+        textPaint.setTextSize(40);
+        cv.drawText(InputActivity.getStateString(), 50, 50, textPaint);
         invalidate();
     }
 

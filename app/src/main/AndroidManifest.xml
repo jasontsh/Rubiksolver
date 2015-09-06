@@ -12,8 +12,8 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:name=".InputActivity"
+            android:label="@string/title_activity_input" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,16 +21,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".UpdateValues"
-            android:label="@string/title_activity_update_values" >
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
-        <activity
             android:name=".RubikViewer"
             android:label="@string/title_activity_rubik_viewer" >
+            android:parentActivityName=".InputActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".InputActivity" />
+        </activity>
+        <activity
+            android:name=".ARActivity"
+            android:label="@string/title_activity_ar" >
+            android:parentActivityName=".InputActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".InputActivity" />
         </activity>
     </application>
 

@@ -4,34 +4,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class RubikViewer extends AppCompatActivity {
 
+    public RubiksCube rc;
+    public RubiksSolver rs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rubik_viewer);
+
+        View[][] grid = new View[3][3];
+        grid[0][0] = findViewById(R.id.view0);
+        grid[1][0] = findViewById(R.id.view1);
+        grid[2][0] = findViewById(R.id.view2);
+        grid[0][1] = findViewById(R.id.view3);
+        grid[1][1] = findViewById(R.id.view4);
+        grid[2][1] = findViewById(R.id.view5);
+        grid[0][2] = findViewById(R.id.view6);
+        grid[1][2] = findViewById(R.id.view7);
+        grid[2][2] = findViewById(R.id.view8);
+
+        
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_rubik_viewer, menu);
-        return true;
-    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 }

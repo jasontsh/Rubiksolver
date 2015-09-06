@@ -15,77 +15,77 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="N"
-            android:id="@+id/textView7"
+        <View
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/view0"
             android:layout_row="0"
             android:layout_column="0"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="N"
-            android:id="@+id/textView8"
+        <View
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/view1"
             android:layout_row="0"
             android:layout_column="1"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="N"
-            android:id="@+id/textView5"
+        <View
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/view2"
+            android:layout_row="0"
+            android:layout_column="2"/>
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/view3"
             android:layout_row="1"
             android:layout_column="0"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="N"
-            android:id="@+id/textView3"
+        <View
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/view4"
             android:layout_row="1"
             android:layout_column="1"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="N"
-            android:id="@+id/textView2"
+        <View
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/view5"
             android:layout_row="1"
-            android:layout_column="3"/>
+            android:layout_column="2"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="N"
-            android:id="@+id/textView6"
-            android:layout_row="3"
+        <View
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/view6"
+            android:layout_row="2"
             android:layout_column="0"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="N"
-            android:id="@+id/textView4"
-            android:layout_row="3"
+        <View
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/view7"
+            android:layout_row="2"
             android:layout_column="1"/>
+
+        <View
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/view8"
+            android:layout_row="2"
+            android:layout_column="2"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="N"
-            android:id="@+id/textView"
-            android:layout_row="3"
-            android:layout_column="3"/>
+            android:textSize="40dp"
+            android:layout_columnSpan="4"
+            android:layout_rowSpan="6"
+            android:layout_row="4"
+            android:layout_column="0"/>
 
         <Button
             android:layout_width="wrap_content"
@@ -103,14 +103,6 @@
             android:layout_row="13"
             android:layout_column="2"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="N"
-            android:id="@+id/textView9"
-            android:layout_row="0"
-            android:layout_column="3"/>
 
     </GridLayout>
 </RelativeLayout>

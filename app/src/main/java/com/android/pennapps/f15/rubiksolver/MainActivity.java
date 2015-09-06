@@ -14,14 +14,11 @@ import android.os.Bundle;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import java.io.ByteArrayOutputStream;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -29,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super();
     }
 
-    private SetUpStates currentState = SetUpStates.SHOW_SIDE_WHITE;
+    private SetupState currentState = SetupState.SHOW_SIDE_WHITE;
     private Camera mCamera = null;
     private CameraView mCameraView = null;
     private int width, height;
@@ -40,8 +37,13 @@ public class MainActivity extends AppCompatActivity {
     private Activity mActivity = this;
     private Camera.PreviewCallback previewCallback = null;
 
-    public SetUpStates getCurrentState() {
+    public SetupState getCurrentState() {
         return currentState;
+    }
+
+    @Override
+    protected  void onPause() {
+        super.onPause();
     }
 
     @Override
@@ -61,11 +63,11 @@ public class MainActivity extends AppCompatActivity {
          * Ordinal 4, 8 are repeats of ordinal 0
          * Ordinal 6 is a repeat of ordinal 2
          */
-        final RubikColor[][][] cube = new RubikColor[9][3][3];
+        final RubikColor[][][] cube = new RubikColor[9 ][3][3];
         setButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(currentState != SetUpStates.SOLVE) {
+                if(currentState != SetupState.SOLVE) {
                     RubikColor[][] colorMap = handler.getCurrentLoadedColorMap();
                     if(colorMap == null) {
                         return;
@@ -80,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
                     cube[currentState.ordinal()] = colorMap;
 
-                    currentState = SetUpStates.values()[currentState.ordinal() + 1];
+                    currentState = SetupState.values()[currentState.ordinal() + 1];
 
                     // colorMap = the 2d array with the 9 colors
                     // store current cube info

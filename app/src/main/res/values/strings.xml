@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Rubiksolver</string>
+    <string name="app_name">RubikSolver</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -8,6 +8,7 @@
     <string name="button_update">Manual Set</string>
     <string name="button_set">Next</string>
     <string name="button_cancel">Reset</string>
+    <string name="ad_id_input">ca-app-pub-8310017333664976/2617849449</string>
     <string-array name="manual_spinner_values">
         <item>W</item>
         <item>B</item>

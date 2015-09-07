@@ -161,8 +161,8 @@ public class RubikViewer extends AppCompatActivity {
         }
         Integer[] turn = rs.turn();
         TextView commands = (TextView) findViewById(R.id.commands);
-        commands.setText(getCommand(turn, side).getText() + "; On " + ttos(turn[0]) + " from " +
-                ttos(turn[1]) + " to " + ttos(turn[2]));
+        commands.setText(getCommand(turn, side).getText() + "( Move the " + ttos(turn[0]) + " centered piece from " +
+                ttos(turn[1]) + " centered to " + ttos(turn[2]) +"centered");
         rc.turn(turn[0], turn[1], turn[2]);
         updateGraphics(side);
     }

@@ -10,8 +10,12 @@ import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 public class InputActivity extends AppCompatActivity {
 
+    AdView mAdView;
     public static int[][][] array;
     Spinner[][] spinners;
     public static int state;
@@ -39,6 +43,10 @@ public class InputActivity extends AppCompatActivity {
             array = new int[6][3][3];
         }
         mySwitch();
+
+        mAdView = (AdView) findViewById(R.id.input_ad);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
     }
 
     @Override
@@ -116,5 +124,29 @@ public class InputActivity extends AppCompatActivity {
                 s.setSelection(0);
             }
         }
+    }
+
+    @Override
+    public void onPause() {
+        if (mAdView != null) {
+            mAdView.pause();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mAdView != null) {
+            mAdView.resume();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (mAdView != null) {
+            mAdView.destroy();
+        }
+        super.onDestroy();
     }
 }

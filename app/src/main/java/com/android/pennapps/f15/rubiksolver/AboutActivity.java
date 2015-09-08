@@ -20,7 +20,8 @@ public class AboutActivity extends AppCompatActivity {
         stringBuilder.append("improve user experience.  \n\n");
         stringBuilder.append("The developers are: \n");
         stringBuilder.append("Jason Tang- rubik's cube structure, solution, and GUI.\n");
-        stringBuilder.append("tangsh@sas.upenn.edu\n\n");
+        stringBuilder.append("email: tangsh@sas.upenn.edu\n");
+        stringBuilder.append("LinkedIn: https://www.linkedin.com/profile/view?id=AAIAABTSyYwBHQTAZJaQutpWZrn6Ul0P6MDrMrI \n\n");
         stringBuilder.append("He Chen- GUI, image recognition, refactoring\n");
         stringBuilder.append("****insert email here****");
         stringBuilder.append("*****mei mei, write your own contribution here");

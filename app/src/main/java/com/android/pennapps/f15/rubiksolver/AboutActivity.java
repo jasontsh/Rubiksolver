@@ -23,8 +23,8 @@ public class AboutActivity extends AppCompatActivity {
         stringBuilder.append("email: tangsh@sas.upenn.edu\n");
         stringBuilder.append("LinkedIn: https://www.linkedin.com/profile/view?id=AAIAABTSyYwBHQTAZJaQutpWZrn6Ul0P6MDrMrI \n\n");
         stringBuilder.append("He Chen- GUI, image recognition, refactoring\n");
-        stringBuilder.append("****insert email here****");
-        stringBuilder.append("Jiahui Jiao- proofread code, test program");
+        stringBuilder.append("email: chenhe95@hotmail.com \n");
+        stringBuilder.append("Jiahui Jiao- proofread code, test program\n");
         stringBuilder.append("email: jiaoj@seas.upenn.edu");
         String string = stringBuilder.toString();
         tv.setText(string);

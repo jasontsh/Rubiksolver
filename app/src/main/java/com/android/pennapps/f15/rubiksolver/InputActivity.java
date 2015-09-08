@@ -1,9 +1,11 @@
 package com.android.pennapps.f15.rubiksolver;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +21,7 @@ public class InputActivity extends AppCompatActivity {
     public static int[][][] array;
     Spinner[][] spinners;
     public static int state;
+    private Activity mActivity = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,9 +94,26 @@ public class InputActivity extends AppCompatActivity {
         }
         state++;
         if(state >= 6){
-            Intent intent = new Intent(this, RubikViewer.class);
-            startActivity(intent);
-            finish();
+            if(!checkValid()){
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Incorrect configuration")
+                .setMessage("Incorrect configuration for a valid Rubik's cube.  Please double" +
+                        " check the values.").setCancelable(false)
+                        .setNeutralButton("Exit", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                                state = 0;
+                                Intent intent = new Intent(mActivity, InputActivity.class);
+                                startActivity(intent);
+                                mActivity.finish();
+                            }
+                        });
+                builder.create().show();
+            }else {
+                Intent intent = new Intent(this, RubikViewer.class);
+                startActivity(intent);
+                finish();
+            }
         }else {
             mySwitch();
         }
@@ -136,7 +156,7 @@ public class InputActivity extends AppCompatActivity {
     public void reset(View v){
         for(Spinner[] ss: spinners){
             for (Spinner s : ss) {
-                s.setSelection(0);
+                s.setSelection(state);
             }
         }
     }
@@ -163,5 +183,22 @@ public class InputActivity extends AppCompatActivity {
             mAdView.destroy();
         }
         super.onDestroy();
+    }
+
+    public static boolean checkValid(){
+        int[] count = new int[6];
+        for(int n = 0; n < 6; n++) {
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    count[array[n][i][j]]++;
+                }
+            }
+        }
+        for(int i: count){
+            if(i != 9){
+                return false;
+            }
+        }
+        return true;
     }
 }

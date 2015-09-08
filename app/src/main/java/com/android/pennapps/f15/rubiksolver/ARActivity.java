@@ -1,7 +1,9 @@
 package com.android.pennapps.f15.rubiksolver;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -25,6 +27,7 @@ public class ARActivity extends AppCompatActivity {
     private Camera mCamera = null;
     private CameraView mCameraView = null;
     private CameraHandler handler = null;
+    private Activity mActivity = this;
 
     private Camera.PreviewCallback previewCallback = null;
 
@@ -135,10 +138,26 @@ public class ARActivity extends AppCompatActivity {
         }
         InputActivity.state++;
         if(InputActivity.state >= 6){
-
-            Intent intent = new Intent(this, RubikViewer.class);
-            startActivity(intent);
-            finish();
+            if(!InputActivity.checkValid()){
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Incorrect configuration")
+                        .setMessage("Incorrect configuration for a valid Rubik's cube.  Please double" +
+                                " check the values.").setCancelable(false)
+                        .setNeutralButton("Exit", new DialogInterface.OnClickListener(){
+                            public void onClick(DialogInterface dialog, int id){
+                                dialog.cancel();
+                                InputActivity.state = 0;
+                                Intent intent = new Intent(mActivity, InputActivity.class);
+                                mActivity.startActivity(intent);
+                                mActivity.finish();
+                            }
+                        });
+                builder.create().show();
+            }else {
+                Intent intent = new Intent(this, RubikViewer.class);
+                startActivity(intent);
+                finish();
+            }
         }
     }
     public void update(){

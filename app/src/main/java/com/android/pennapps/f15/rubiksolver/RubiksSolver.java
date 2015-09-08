@@ -55,7 +55,6 @@ public class RubiksSolver {
             case 5:
                 state5(answer);
                 break;
-            //            case 6: state6(answer); break;
         }
         return answer;
     }

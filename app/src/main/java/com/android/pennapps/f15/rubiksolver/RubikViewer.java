@@ -153,16 +153,22 @@ public class RubikViewer extends AppCompatActivity {
     }
 
     public void next(View v){
-        if(!flip && rs.getState()==2){
+        if(!flip && rs.getState()>=2){
             flip = true;
             side = 3;
             TextView tv = (TextView)findViewById(R.id.rvtv);
             tv.setText("Face yellow with green on top");
         }
         Integer[] turn = rs.turn();
+        if(turn[0] == 0 && turn[1] == 0 && turn[2] == 0){
+            TextView commands = (TextView) findViewById(R.id.commands);
+            commands.setText("Solved");
+            return;
+        }
         TextView commands = (TextView) findViewById(R.id.commands);
-        commands.setText(getCommand(turn, side).getText() + "( Move the " + ttos(turn[0]) + " centered piece from " +
-                ttos(turn[1]) + " centered to " + ttos(turn[2]) +"centered");
+        commands.setText(getCommand(turn, side).getText() + " (Move the " + ttos(turn[0]) + " centered piece from " +
+                ttos(turn[1]) + " centered to " + ttos(turn[2]) +" centered)");
+
         rc.turn(turn[0], turn[1], turn[2]);
         updateGraphics(side);
     }

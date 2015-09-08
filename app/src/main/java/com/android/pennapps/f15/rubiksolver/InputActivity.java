@@ -41,6 +41,13 @@ public class InputActivity extends AppCompatActivity {
             }
         } else {
             array = new int[6][3][3];
+            for(int i = 0; i < 6; i++){
+                for(int j = 0; j < 3; j++){
+                    for(int k = 0; k < 3; k++){
+                        array[i][j][k] = i;
+                    }
+                }
+            }
         }
         mySwitch();
 
@@ -93,27 +100,34 @@ public class InputActivity extends AppCompatActivity {
 
     public void mySwitch(){
         ((TextView) findViewById(R.id.instructions)).setText(getStateString());
-        spinners[1][1].setSelection(state);
+        if(array != null){
+            for(int i = 0; i < 3; i++){
+                for(int j = 0; j < 3; j++){
+                    spinners[i][j].setSelection(array[state][i][j]);
+                }
+            }
+        }
     }
 
     public static String getStateString(){
         switch(state){
-            case 0: return "Please enter the values with white at the center, and blue on top";
+            case 0: return "Please enter the values of the white face orientated such " +
+                    "that the blue face is on the top side of the cube";
             case 1:
-                return "Please enter the" +
-                        " values with blue at the center, and red on top";
+                return "Please enter the values of the blue face orientated such " +
+                        "that the red face is on the top side of the cube";
             case 2:
-                return "Please enter the" +
-                        " values with red at the center, and yellow on top";
+                return "Please enter the values of the red face orientated such " +
+                        "that the yellow face is on the top side of the cube";
             case 3:
-                return "Please enter the" +
-                        " values with yellow at the center, and green on top";
+                return "Please enter the values of the yellow face orientated such " +
+                        "that the green face is on the top side of the cube";
             case 4:
-                return"Please enter the" +
-                        " values with green at the center, and orange on top";
+                return "Please enter the values of the green face orientated such " +
+                        "that the orange face is on the top side of the cube";
             case 5:
-                return"Please enter the" +
-                        " values with orange at the center, and white on top";
+                return "Please enter the values of the orange face orientated such " +
+                        "that the white face is on the top side of the cube";
         }
         return null;
     }

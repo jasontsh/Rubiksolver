@@ -99,7 +99,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/instructions"
-            android:textSize="40dp"
+            android:textSize="28dp"
             android:layout_columnSpan="4"
             android:layout_row="3"
             android:layout_column="0"/>

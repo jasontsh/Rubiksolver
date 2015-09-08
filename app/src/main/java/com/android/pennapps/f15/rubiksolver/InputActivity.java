@@ -19,6 +19,7 @@ public class InputActivity extends AppCompatActivity {
     public static int[][][] array;
     Spinner[][] spinners;
     public static int state;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

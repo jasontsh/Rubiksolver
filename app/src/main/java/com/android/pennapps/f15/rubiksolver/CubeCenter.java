@@ -10,11 +10,11 @@ import java.util.Set;
 public class CubeCenter extends CubePart{
     int color;
     Map<Integer, CubeSide> sides;
-    Map<Set<Integer>, CubeCorner> corners;
+    Map<Integer, CubeCorner> corners;
     public CubeCenter(int c){
         color = c;
         sides = new HashMap<Integer, CubeSide>();
-        corners = new HashMap<Set<Integer>, CubeCorner>();
+        corners = new HashMap<Integer, CubeCorner>();
     }
 
     public int getColor(){
@@ -25,7 +25,7 @@ public class CubeCenter extends CubePart{
         sides.put(color, cs);
     }
 
-    public void setCorner(Set<Integer> set, CubeCorner cn){
+    public void setCorner(int set, CubeCorner cn){
         corners.put(set, cn);
     }
 
@@ -33,7 +33,7 @@ public class CubeCenter extends CubePart{
         return sides.get(color);
     }
 
-    public CubeCorner getCorner(Set<Integer> key){
+    public CubeCorner getCorner(int key){
         return corners.get(key);
     }
 

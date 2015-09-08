@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.hardware.Camera;
+import android.renderscript.ScriptGroup;
 import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -19,10 +20,12 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, R
     private boolean on = false;
     private CameraHandler handler = null;
     private ARActivity mainActivity = null;
+    private InputActivity ia = null;
 
-    public CameraView(ARActivity main, Context context, Camera camera, CameraHandler handler) {
+    public CameraView(ARActivity main, Context context, Camera camera, CameraHandler handler, InputActivity ia) {
         super(context);
         mainActivity = main;
+        this.ia = ia;
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         Display display = wm.getDefaultDisplay();
         this.handler = handler;
@@ -68,7 +71,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, R
         Paint textPaint = new Paint();
         textPaint.setColor(0xFFFFFFFF);
         textPaint.setTextSize(40);
-        cv.drawText(InputActivity.getStateString(), 50, 50, textPaint);
+        cv.drawText(ia.getStateString(), 50, 50, textPaint);
         invalidate();
     }
 

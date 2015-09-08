@@ -7,6 +7,7 @@ import java.util.HashSet;
  */
 public class RubiksCube {
 
+    private CubeCenter[] centers;
 
     static int key(int a, int b) {
         if (b > a) {
@@ -17,7 +18,6 @@ public class RubiksCube {
         return (a + b) * (a + b + 1) / 2 + b;
     }
 
-    CubeCenter[] centers;
 
     public RubiksCube(int[][][] array) {
         CubeCenter w = new CubeCenter(0);

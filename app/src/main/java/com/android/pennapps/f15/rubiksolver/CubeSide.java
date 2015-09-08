@@ -7,8 +7,10 @@ import java.util.Map;
  * Created by Jason on 9/4/2015.
  */
 public class CubeSide extends CubePart{
-    int color1, color2;
-    int color1On, color2On;
+
+    private int color1, color2;
+    private int color1On, color2On;
+
     public CubeSide(int c1,int c2, int cc1, int cc2){
         color1 = c1;
         color2 = c2;

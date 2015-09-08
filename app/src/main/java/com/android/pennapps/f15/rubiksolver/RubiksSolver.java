@@ -16,10 +16,10 @@ public class RubiksSolver {
      * 0  when doing the cross, 1 when doing corners, 2 when 2nd layer, 3 when switch up, 4 when
      * change sides, 5 when relocate corners, 6 flip corners
      */
-    int state;
-    Set<CubePart> locked;
-    Queue<Integer[]> queue;
-    RubiksCube cube;
+    private int state;
+    private Set<CubePart> locked;
+    private Queue<Integer[]> queue;
+    private RubiksCube cube;
 
     public RubiksSolver(RubiksCube c) {
         state = 0;

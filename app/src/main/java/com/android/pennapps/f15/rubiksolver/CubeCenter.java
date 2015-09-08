@@ -42,7 +42,7 @@ public class CubeCenter extends CubePart{
     }
 
     public void change(int from, int to){
-
+        // TODO
     }
 
     public boolean equals(Object other){

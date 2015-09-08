@@ -17,11 +17,28 @@ import com.google.android.gms.ads.AdView;
 
 public class InputActivity extends AppCompatActivity {
 
-    AdView mAdView;
-    public static int[][][] array;
-    Spinner[][] spinners;
-    public static int state;
+    private AdView mAdView;
+    private int[][][] array;
+    private Spinner[][] spinners;
+    private int state;
     private Activity mActivity = this;
+
+    public int[][][] getCubeArray() {
+        return array;
+    }
+
+    public int getState() {
+        return state;
+    }
+
+    public void nextState() {
+        state++;
+    }
+
+    public void resetState() {
+        state = 0;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,7 +147,7 @@ public class InputActivity extends AppCompatActivity {
         }
     }
 
-    public static String getStateString(){
+    public String getStateString(){
         switch(state){
             case 0: return "Please enter the values of the white face orientated such " +
                     "that the blue face is on the top side of the cube";
@@ -185,7 +202,7 @@ public class InputActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public static boolean checkValid(){
+    public boolean checkValid(){
         int[] count = new int[6];
         for(int n = 0; n < 6; n++) {
             for (int i = 0; i < 3; i++) {

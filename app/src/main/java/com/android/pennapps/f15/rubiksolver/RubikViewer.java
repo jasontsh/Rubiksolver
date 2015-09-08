@@ -16,10 +16,15 @@ import static com.android.pennapps.f15.rubiksolver.RubiksCube.key;
 //There are only two facing ways: white and yellow
 public class RubikViewer extends AppCompatActivity {
 
-    public RubiksCube rc;
-    public int side;
-    public RubiksSolver rs;
-    public boolean flip;
+    private RubiksCube rc;
+    private int side;
+    private RubiksSolver rs;
+    private boolean flip;
+    private InputActivity ia = null;
+
+    public RubikViewer(InputActivity ia) {
+        this.ia = ia;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +32,7 @@ public class RubikViewer extends AppCompatActivity {
         setContentView(R.layout.activity_rubik_viewer);
         flip = false;
 
-        rc = new RubiksCube(InputActivity.array);
+        rc = new RubiksCube(ia.getCubeArray());
         rs = new RubiksSolver(rc);
 
         TextView tv = (TextView) findViewById(R.id.rvtv);
@@ -212,7 +217,7 @@ public class RubikViewer extends AppCompatActivity {
     }
 
     public void reset(View v) {
-        InputActivity.state = 0;
+        ia.resetState();
         Intent intent = new Intent(this, InputActivity.class);
         startActivity(intent);
         finish();

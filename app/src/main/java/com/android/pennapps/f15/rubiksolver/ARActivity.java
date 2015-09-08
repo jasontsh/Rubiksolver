@@ -24,12 +24,18 @@ import android.widget.RelativeLayout;
 import java.io.ByteArrayOutputStream;
 
 public class ARActivity extends AppCompatActivity {
+
     private Camera mCamera = null;
     private CameraView mCameraView = null;
     private CameraHandler handler = null;
     private Activity mActivity = this;
 
     private Camera.PreviewCallback previewCallback = null;
+    private InputActivity ia = null;
+
+    public ARActivity(InputActivity ia) {
+        this.ia = ia;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,18 +49,19 @@ public class ARActivity extends AppCompatActivity {
         previewCallback = new Camera.PreviewCallback() {
 
             @Override
-            public void onPreviewFrame(byte[] data, Camera camera)  {
+            public void onPreviewFrame(byte[] data, Camera camera) {
                 execute(data);
             }
 
             private void execute(byte[] data) {
                 Camera.Size previewSize = mCamera.getParameters().getPreviewSize();
                 ByteArrayOutputStream out = new ByteArrayOutputStream();
-                YuvImage yuvImg = new YuvImage(data, ImageFormat.NV21, previewSize.width, previewSize.height, null);
+                YuvImage yuvImg =
+                        new YuvImage(data, ImageFormat.NV21, previewSize.width, previewSize.height, null);
                 yuvImg.compressToJpeg(new Rect(0, 0, previewSize.width, previewSize.height), 50, out);
                 byte[] imageBytes = out.toByteArray();
                 Bitmap image = BitmapFactory.decodeByteArray(imageBytes, 0, imageBytes.length);
-                if(image == null) {
+                if (image == null) {
                     System.out.println("NULL IMAGE PREVIEW");
                 } else {
                     RubikColor[][] imageMap = handler.readImage(image);
@@ -71,21 +78,21 @@ public class ARActivity extends AppCompatActivity {
     private boolean released = false;
 
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
     }
 
     @Override
-    protected void onStop(){
+    protected void onStop() {
         super.onStop();
         released = true;
         mCamera.release();
     }
+
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
-        if(released)
-            mCamera.open();
+        if (released) mCamera.open();
     }
 
     @Override
@@ -107,82 +114,101 @@ public class ARActivity extends AppCompatActivity {
             Intent intent = new Intent(this, AboutActivity.class);
             startActivity(intent);
         }
-        if(id == R.id.menu_next){
+        if (id == R.id.menu_next) {
             next();
         }
-        if(id == R.id.menu_update){
+        if (id == R.id.menu_update) {
             update();
         }
         return super.onOptionsItemSelected(item);
     }
 
-    public void next(){
+    public void next() {
         RubikColor[][] colorMap = handler.getCurrentLoadedColorMap();
-        if(colorMap == null) {
+        if (colorMap == null) {
             return;
         }
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if(colorMap[i][j] == null) {
+                if (colorMap[i][j] == null) {
                     return;
                 }
-                switch(colorMap[i][j]){
-                    case RED: InputActivity.array[InputActivity.state][i][j] = 2; break;
-                    case WHITE: InputActivity.array[InputActivity.state][i][j] = 0; break;
-                    case BLUE: InputActivity.array[InputActivity.state][i][j] = 1; break;
-                    case YELLOW: InputActivity.array[InputActivity.state][i][j] = 3; break;
-                    case GREEN: InputActivity.array[InputActivity.state][i][j] = 4; break;
-                    case ORANGE: InputActivity.array[InputActivity.state][i][j] = 5; break;
+                switch (colorMap[i][j]) {
+                    case RED:
+                        ia.getCubeArray()[ia.getState()][i][j] = 2;
+                        break;
+                    case WHITE:
+                        ia.getCubeArray()[ia.getState()][i][j] = 0;
+                        break;
+                    case BLUE:
+                        ia.getCubeArray()[ia.getState()][i][j] = 1;
+                        break;
+                    case YELLOW:
+                        ia.getCubeArray()[ia.getState()][i][j] = 3;
+                        break;
+                    case GREEN:
+                        ia.getCubeArray()[ia.getState()][i][j] = 4;
+                        break;
+                    case ORANGE:
+                        ia.getCubeArray()[ia.getState()][i][j] = 5;
+                        break;
                 }
             }
         }
-        InputActivity.state++;
-        if(InputActivity.state >= 6){
-            if(!InputActivity.checkValid()){
+        ia.nextState();
+        if (ia.getState() >= 6) {
+            if (!ia.checkValid()) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setTitle("Incorrect configuration")
-                        .setMessage("Incorrect configuration for a valid Rubik's cube.  Please double" +
+                builder.setTitle("Incorrect configuration").setMessage(
+                        "Incorrect configuration for a valid Rubik's cube.  Please double" +
                                 " check the values.").setCancelable(false)
-                        .setNeutralButton("Exit", new DialogInterface.OnClickListener(){
-                            public void onClick(DialogInterface dialog, int id){
+                        .setNeutralButton("Exit", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
                                 dialog.cancel();
-                                InputActivity.state = 0;
+                                ia.resetState();
                                 Intent intent = new Intent(mActivity, InputActivity.class);
                                 mActivity.startActivity(intent);
                                 mActivity.finish();
                             }
                         });
                 builder.create().show();
-            }else {
+            } else {
                 Intent intent = new Intent(this, RubikViewer.class);
                 startActivity(intent);
                 finish();
             }
         }
     }
-    public void update(){
+
+    public void update() {
         RubikColor[][] colorMap = handler.getCurrentLoadedColorMap();
-        if(colorMap == null) {
+        if (colorMap == null) {
             return;
         }
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                if(colorMap[i][j] == null){
-                    InputActivity.array[InputActivity.state][i][j] = 0;
-                }else {
+                if (colorMap[i][j] == null) {
+                    ia.getCubeArray()[ia.getState()][i][j] = 0;
+                } else {
                     switch (colorMap[i][j]) {
                         case RED:
-                            InputActivity.array[InputActivity.state][i][j] = 2; break;
+                            ia.getCubeArray()[ia.getState()][i][j] = 2;
+                            break;
                         case WHITE:
-                            InputActivity.array[InputActivity.state][i][j] = 0; break;
+                            ia.getCubeArray()[ia.getState()][i][j] = 0;
+                            break;
                         case BLUE:
-                            InputActivity.array[InputActivity.state][i][j] = 1; break;
+                            ia.getCubeArray()[ia.getState()][i][j] = 1;
+                            break;
                         case YELLOW:
-                            InputActivity.array[InputActivity.state][i][j] = 3; break;
+                            ia.getCubeArray()[ia.getState()][i][j] = 3;
+                            break;
                         case GREEN:
-                            InputActivity.array[InputActivity.state][i][j] = 4; break;
+                            ia.getCubeArray()[ia.getState()][i][j] = 4;
+                            break;
                         case ORANGE:
-                            InputActivity.array[InputActivity.state][i][j] = 5; break;
+                            ia.getCubeArray()[ia.getState()][i][j] = 5;
+                            break;
                     }
                 }
             }

@@ -44,7 +44,6 @@ public class CameraHandler {
     private int[] cornerXY = null;
     private static final int CUBE_SIZE = 3;
     private static final int SCAN_SIZE = 60;
-    private int z = 0;
     private Semaphore sem = new Semaphore(1);
 
     public RubikColor[][] getCurrentLoadedColorMap() {
@@ -59,12 +58,12 @@ public class CameraHandler {
         paint.setTextSize(26);
         paint.setColor(0xFFFF0000);
         paint.setStyle(Paint.Style.STROKE);
-        Rect rect = new Rect(cornerXY[0], cornerXY[2], cornerXY[1], cornerXY[3] + z);
+        Rect rect = new Rect(cornerXY[0], cornerXY[2], cornerXY[1], cornerXY[3]);
         cv.drawRect(rect, paint);
         try {
             sem.acquire();
         } catch (InterruptedException e) {
-
+            e.printStackTrace();
         }
         if (globalColorMap != null) {
             synchronized (globalColorMap) {
@@ -140,10 +139,9 @@ public class CameraHandler {
         try {
             sem.acquire();
         } catch (InterruptedException e) {
-
+            e.printStackTrace();
         }
         globalColorMap = colorMap;
-
         sem.release();
         return colorMap;
     }

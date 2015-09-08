@@ -9,8 +9,9 @@ import java.util.Set;
  * Created by Jason on 9/4/2015.
  */
 public class CubeCorner extends CubePart{
-    int color1, color2, color3;
-    int c1, c2, c3;
+
+    private int color1, color2, color3;
+    private int c1, c2, c3;
 
     public CubeCorner(int co1, int co2, int co3, int cc1, int cc2, int cc3){
         color1 = co1;
@@ -50,10 +51,7 @@ public class CubeCorner extends CubePart{
     }
 
     public boolean equals(Object other){
-        if(other == null){
-            return false;
-        }
-        if(!(other instanceof CubeCorner)){
+        if(other == null || !(other instanceof CubeCorner)){
             return false;
         }
         CubeCorner cc = (CubeCorner) other;

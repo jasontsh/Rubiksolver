@@ -2,7 +2,7 @@
     <string name="app_name">RubikSolver</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">About</string>
     <string name="title_activity_update_values">UpdateValues</string>
     <string name="button_side">Set Side</string>
     <string name="button_update">Manual Set</string>
@@ -21,4 +21,5 @@
     <string name="title_activity_input">InputActivity</string>
     <string name="title_activity_ar">ARActivity</string>
     <string name="ar_link">AR input</string>
+    <string name="title_activity_about">AboutActivity</string>
 </resources>

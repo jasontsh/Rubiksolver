@@ -72,7 +72,8 @@ public class InputActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Intent intent = new Intent(this, AboutActivity.class);
+            startActivity(intent);
         }
         if(id == R.id.menu_ar){
             Intent intent = new Intent(this, ARActivity.class);

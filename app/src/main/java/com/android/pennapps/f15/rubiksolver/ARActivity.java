@@ -134,7 +134,7 @@ public class ARActivity extends AppCompatActivity {
         }
         InputActivity.state++;
         if(InputActivity.state >= 6){
-            
+
             Intent intent = new Intent(this, RubikViewer.class);
             startActivity(intent);
             finish();

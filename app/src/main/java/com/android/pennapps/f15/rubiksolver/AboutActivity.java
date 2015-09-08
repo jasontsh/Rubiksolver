@@ -24,7 +24,8 @@ public class AboutActivity extends AppCompatActivity {
         stringBuilder.append("LinkedIn: https://www.linkedin.com/profile/view?id=AAIAABTSyYwBHQTAZJaQutpWZrn6Ul0P6MDrMrI \n\n");
         stringBuilder.append("He Chen- GUI, image recognition, refactoring\n");
         stringBuilder.append("****insert email here****");
-        stringBuilder.append("*****mei mei, write your own contribution here");
+        stringBuilder.append("Jiahui Jiao- proofread code, test program");
+        stringBuilder.append("email: jiaoj@seas.upenn.edu");
         String string = stringBuilder.toString();
         tv.setText(string);
     }

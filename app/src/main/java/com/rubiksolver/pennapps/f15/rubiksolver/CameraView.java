@@ -1,10 +1,9 @@
-package com.android.pennapps.f15.rubiksolver;
+package com.rubiksolver.pennapps.f15.rubiksolver;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.hardware.Camera;
-import android.renderscript.ScriptGroup;
 import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -22,7 +21,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, R
     private ARActivity mainActivity = null;
     private InputActivity ia = null;
 
-    public CameraView(ARActivity main, Context context, Camera camera, CameraHandler handler, InputActivity ia) {
+    public CameraView(ARActivity main, Context context, Camera camera, CameraHandler handler) {
         super(context);
         mainActivity = main;
         this.ia = ia;
@@ -71,7 +70,7 @@ public class CameraView extends SurfaceView implements SurfaceHolder.Callback, R
         Paint textPaint = new Paint();
         textPaint.setColor(0xFFFFFFFF);
         textPaint.setTextSize(40);
-        cv.drawText(ia.getStateString(), 50, 50, textPaint);
+        cv.drawText(InputActivity.getStateString(), 50, 50, textPaint);
         invalidate();
     }
 

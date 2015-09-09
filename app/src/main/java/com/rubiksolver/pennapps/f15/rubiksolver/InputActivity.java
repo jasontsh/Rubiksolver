@@ -1,4 +1,4 @@
-package com.android.pennapps.f15.rubiksolver;
+package com.rubiksolver.pennapps.f15.rubiksolver;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -18,25 +18,13 @@ import com.google.android.gms.ads.AdView;
 public class InputActivity extends AppCompatActivity {
 
     private AdView mAdView;
-    private int[][][] array;
+    public static int[][][] array;
     private Spinner[][] spinners;
-    private int state;
+    public static int state;
     private Activity mActivity = this;
 
     public int[][][] getCubeArray() {
         return array;
-    }
-
-    public int getState() {
-        return state;
-    }
-
-    public void nextState() {
-        state++;
-    }
-
-    public void resetState() {
-        state = 0;
     }
 
     @Override
@@ -147,7 +135,7 @@ public class InputActivity extends AppCompatActivity {
         }
     }
 
-    public String getStateString(){
+    public static String getStateString(){
         switch(state){
             case 0: return "Please enter the values of the white face orientated such " +
                     "that the blue face is on the top side of the cube";
@@ -202,7 +190,7 @@ public class InputActivity extends AppCompatActivity {
         super.onDestroy();
     }
 
-    public boolean checkValid(){
+    public static boolean checkValid(){
         int[] count = new int[6];
         for(int n = 0; n < 6; n++) {
             for (int i = 0; i < 3; i++) {

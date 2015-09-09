@@ -1,4 +1,4 @@
-package com.android.pennapps.f15.rubiksolver;
+package com.rubiksolver.pennapps.f15.rubiksolver;
 
 /**
  * Created by He on 9/5/2015.

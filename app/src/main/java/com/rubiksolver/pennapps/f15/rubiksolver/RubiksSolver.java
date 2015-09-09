@@ -1,4 +1,4 @@
-package com.android.pennapps.f15.rubiksolver;
+package com.rubiksolver.pennapps.f15.rubiksolver;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
 
-import static com.android.pennapps.f15.rubiksolver.RubiksCube.key;
+import static com.rubiksolver.pennapps.f15.rubiksolver.RubiksCube.key;
 
 /**
  * Created by Jason on 9/5/2015.

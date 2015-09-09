@@ -1,4 +1,4 @@
-package com.android.pennapps.f15.rubiksolver;
+package com.rubiksolver.pennapps.f15.rubiksolver;
 
 import java.util.HashMap;
 import java.util.Map;
